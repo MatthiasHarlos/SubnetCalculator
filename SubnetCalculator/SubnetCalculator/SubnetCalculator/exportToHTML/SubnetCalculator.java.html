@@ -1,0 +1,106 @@
+<html>
+<head>
+<title>SubnetCalculator.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #81a1c1;}
+.s1 { color: #d8dee9;}
+.s2 { color: #eceff4;}
+.s3 { color: #a3be8c;}
+.s4 { color: #616e88;}
+.s5 { color: #ebcb8b;}
+.s6 { color: #b48ead;}
+</style>
+</head>
+<body bgcolor="#2e3440">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+SubnetCalculator.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">apache</span><span class="s2">.</span><span class="s1">commons</span><span class="s2">.</span><span class="s1">lang3</span><span class="s2">.</span><span class="s1">StringUtils</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s0">*</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">SubnetCalculator </span><span class="s0">extends </span><span class="s1">Object </span><span class="s2">{</span>
+    <span class="s0">static </span><span class="s1">List</span><span class="s0">&lt;</span><span class="s1">Integer</span><span class="s0">&gt; </span><span class="s1">sequenzList </span><span class="s0">= new </span><span class="s1">ArrayList</span><span class="s0">&lt;&gt;</span><span class="s2">();</span>
+
+    <span class="s0">public static void </span><span class="s1">main</span><span class="s2">(</span><span class="s1">String</span><span class="s2">[] </span><span class="s1">args</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Willkommen beim Netzwerkrechner!&quot;</span><span class="s2">);</span>
+        <span class="s1">checkUserIPInput</span><span class="s2">();</span>
+        <span class="s1">checkUserSNMInput</span><span class="s2">();</span>
+
+            
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">checkUserIPInput</span><span class="s2">() {</span>
+        <span class="s0">boolean </span><span class="s1">dotsChecked </span><span class="s0">= false</span><span class="s2">;</span>
+        <span class="s1">String userInput </span><span class="s0">=</span><span class="s3">&quot; &quot;</span><span class="s2">;</span>
+        <span class="s1">Scanner scan </span><span class="s0">= new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s4">//userInput = scan.nextLine();</span>
+        <span class="s1">dotsChecked </span><span class="s0">= </span><span class="s1">checkDots</span><span class="s2">(</span><span class="s1">userInput</span><span class="s2">);</span>
+        <span class="s1">isLenghtRight</span><span class="s2">(</span><span class="s1">userInput</span><span class="s2">);</span>
+        <span class="s1">splitID</span><span class="s2">(</span><span class="s1">userInput</span><span class="s2">);</span>
+    <span class="s2">}</span>
+    
+    <span class="s0">private static void </span><span class="s1">checkUserSNMInput</span><span class="s2">() {</span>
+        <span class="s0">boolean </span><span class="s1">dotsChecked </span><span class="s0">= false</span><span class="s2">;</span>
+        <span class="s1">String userInput </span><span class="s0">=</span><span class="s3">&quot; &quot;</span><span class="s2">;</span>
+        <span class="s1">Scanner scan </span><span class="s0">= new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s1">userInput </span><span class="s0">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+        <span class="s1">dotsChecked </span><span class="s0">= </span><span class="s1">checkDots</span><span class="s2">(</span><span class="s1">userInput</span><span class="s2">);</span>
+        <span class="s1">isLenghtRight</span><span class="s2">(</span><span class="s1">userInput</span><span class="s2">);</span>
+        <span class="s1">splitID</span><span class="s2">(</span><span class="s1">userInput</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static void </span><span class="s1">splitID</span><span class="s2">(</span><span class="s1">String ip</span><span class="s2">) {</span>
+
+                <span class="s1">List</span><span class="s0">&lt;</span><span class="s1">String</span><span class="s0">&gt; </span><span class="s1">sequentList </span><span class="s0">= </span><span class="s1">Arrays</span><span class="s2">.</span><span class="s1">asList</span><span class="s2">(</span><span class="s1">ip</span><span class="s2">.</span><span class="s1">split</span><span class="s2">(</span><span class="s3">&quot;</span><span class="s5">\\</span><span class="s3">.&quot;</span><span class="s2">));</span>
+                <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s0">= </span><span class="s6">0</span><span class="s2">; </span><span class="s1">i </span><span class="s0">&lt; </span><span class="s6">4</span><span class="s2">; </span><span class="s1">i</span><span class="s0">++</span><span class="s2">) {</span>
+
+
+                    <span class="s0">if </span><span class="s2">(</span><span class="s1">sequentList</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">i</span><span class="s2">).</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+                        <span class="s0">throw new </span><span class="s1">InputMismatchException</span><span class="s2">(</span><span class="s3">&quot;Zuwenig Sequent Inhalt!&quot;</span><span class="s2">);</span>
+
+                    <span class="s2">}</span>
+                    <span class="s0">if </span><span class="s2">(</span><span class="s1">sequentList</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s6">0</span><span class="s2">).</span><span class="s1">equals</span><span class="s2">(</span><span class="s3">&quot;0&quot;</span><span class="s2">)) {</span>
+                        <span class="s0">throw new </span><span class="s1">InputMismatchException</span><span class="s2">(</span><span class="s3">&quot;Erste Sequenz darf nicht 0 sein!&quot;</span><span class="s2">);</span>
+                    <span class="s2">}</span>
+                    <span class="s0">if </span><span class="s2">(</span><span class="s0">!</span><span class="s1">StringUtils</span><span class="s2">.</span><span class="s1">isNumeric</span><span class="s2">(</span><span class="s1">sequentList</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">i</span><span class="s2">))) {</span>
+                        <span class="s0">throw new </span><span class="s1">InputMismatchException</span><span class="s2">(</span><span class="s3">&quot;Ungültige Eingabe! Gib bitte eine gültige IP ein!&quot;</span><span class="s2">);</span>
+                    <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                        <span class="s0">int </span><span class="s1">sequence </span><span class="s0">= </span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">parseInt</span><span class="s2">(</span><span class="s1">sequentList</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">i</span><span class="s2">));</span>
+
+                        <span class="s1">sequentLength</span><span class="s2">(</span><span class="s1">sequence</span><span class="s2">);</span>
+                    <span class="s2">}</span>
+                <span class="s2">}</span>
+
+    <span class="s2">}</span>
+
+    <span class="s0">public static void </span><span class="s1">sequentLength</span><span class="s2">(</span><span class="s0">int </span><span class="s1">sequent</span><span class="s2">) {</span>
+        <span class="s0">if</span><span class="s2">(</span><span class="s1">sequent </span><span class="s0">&lt; </span><span class="s6">256</span><span class="s2">){</span>
+            <span class="s1">sequenzList</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">sequent</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s0">throw new </span><span class="s1">InputMismatchException</span><span class="s2">(</span><span class="s3">&quot;Zahl zu groß&quot;</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static boolean </span><span class="s1">checkDots</span><span class="s2">(</span><span class="s1">String ip</span><span class="s2">) {</span>
+        <span class="s0">int </span><span class="s1">count </span><span class="s0">= </span><span class="s1">StringUtils</span><span class="s2">.</span><span class="s1">countMatches</span><span class="s2">(</span><span class="s1">ip</span><span class="s2">, </span><span class="s3">&quot;.&quot;</span><span class="s2">);</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">count </span><span class="s0">== </span><span class="s6">3</span><span class="s2">) {</span>
+            <span class="s0">return true</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s0">return false</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static boolean </span><span class="s1">isLenghtRight</span><span class="s2">(</span><span class="s1">String ip</span><span class="s2">) {</span>
+        <span class="s0">int </span><span class="s1">iplength </span><span class="s0">= </span><span class="s1">ip</span><span class="s2">.</span><span class="s1">length</span><span class="s2">();</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">iplength </span><span class="s0">&lt; </span><span class="s6">7 </span><span class="s0">|| </span><span class="s1">iplength </span><span class="s0">&gt; </span><span class="s6">15</span><span class="s2">) {</span>
+            <span class="s0">return false</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s0">return true</span><span class="s2">;</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

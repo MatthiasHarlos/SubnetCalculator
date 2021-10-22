@@ -64,10 +64,10 @@ public class SubnetCalculator{
         int logicalAnd = (snmBinary.lastIndexOf("1")+1);
         ipBinary = ipBinary.substring(0, logicalAnd);
         String iDBinary = ipBinary;
-        return turnIntoDecimal(iDBinary, snmBinary);
+        return turnIPIntoDecimal(iDBinary, snmBinary);
     }
 
-    public static String turnIntoDecimal(String binaryAddress, String snmBinary) {
+    public static String turnIPIntoDecimal(String binaryAddress, String snmBinary) {
         String[] decimalAdr = decimal(binaryAddress).split("\\/");
         String decimalAdress = decimalAdr[0];
         String decimalAdressTwo = decimalAdr[1];
@@ -79,7 +79,7 @@ public class SubnetCalculator{
                 decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + " ";
             }
             decimalAdress = "ID 0= " + decimalAdress + " " + decimalAddressIDs;
-        } else if (snmBinary.lastIndexOf("1") >= 16) {
+        } else if (snmBinary.lastIndexOf("1") >= 16 && snmBinary.lastIndexOf("1") <23) {
             snmBinary = snmBinary.substring(16, 24);
             String iDsFromSNM = calcSize(snmBinary);
             String decimalAddressIDs ="";
@@ -87,7 +87,7 @@ public class SubnetCalculator{
                 decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + ".0" + " ";
             }
             decimalAdress = "ID 0= " + decimalAdress + " " + decimalAddressIDs;
-        } else if (snmBinary.lastIndexOf("1") >= 8) {
+        } else if (snmBinary.lastIndexOf("1") >= 8 && snmBinary.lastIndexOf("1") <15) {
             snmBinary = snmBinary.substring(8, 16);
             String iDsFromSNM = calcSize(snmBinary);
             String decimalAddressIDs ="";

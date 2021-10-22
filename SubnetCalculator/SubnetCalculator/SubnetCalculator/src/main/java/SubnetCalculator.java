@@ -1,6 +1,5 @@
 import org.apache.commons.lang3.StringUtils;
 
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class SubnetCalculator extends Object {
@@ -23,16 +22,6 @@ public class SubnetCalculator extends Object {
         return turnIntoDecimalBC(iDBinary, snmBinary);
     }
 
-    public static String calcBC(String  snmBinary) {
-        snmBinary = snmBinary.substring(snmBinary.lastIndexOf("1"));
-        String zero = "";
-        for (int i = snmBinary.length(); i < 8; i++) {
-            zero += "0";
-        }
-        snmBinary = zero + snmBinary;
-        return Integer.parseInt(snmBinary, 2) + "";
-    }
-
     public static String turnIntoDecimalBC(String binaryAddress, String snmBinary) {
         String decimalAdr[] = decimal(binaryAddress).split("\\/");
         String decimalAdress = decimalAdr[0];
@@ -44,7 +33,7 @@ public class SubnetCalculator extends Object {
             decimalAdress = "ID 0 BroadCast= " + decimalAdressTwo+".255.255";
         } else if (snmBinary.lastIndexOf("1") >=16 && snmBinary.lastIndexOf("1") <23) {
             snmBinary = snmBinary.substring(16, 24);
-            String iDsFromSNM = calcBC(snmBinary);
+            String iDsFromSNM = calcSize(snmBinary);
             for (int i = Integer.parseInt(iDsFromSNM); i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
                 decimalAddressBCs += "ID " + (i-Integer.parseInt(iDsFromSNM)) + " BroadCast= " + decimalAdressTwo + "." + (i-1) + ".255" + " ";
             }
@@ -54,7 +43,7 @@ public class SubnetCalculator extends Object {
             decimalAdress = "ID 0 BroadCast= " + decimalAdressTwo+".255.255.255";
         } else if (snmBinary.lastIndexOf("1") >=8 && snmBinary.lastIndexOf("1") <15) {
             snmBinary = snmBinary.substring(8, 16);
-            String iDsFromSNM = calcBC(snmBinary);
+            String iDsFromSNM = calcSize(snmBinary);
             for (int i = Integer.parseInt(iDsFromSNM); i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
                 decimalAddressBCs += "ID " + (i-Integer.parseInt(iDsFromSNM)) + " BroadCast= " + decimalAdressTwo + "." + (i-1) + ".255.255" + " ";
             }
@@ -62,7 +51,7 @@ public class SubnetCalculator extends Object {
         }
         if (snmBinary.lastIndexOf("1") >= 24) {
             snmBinary = snmBinary.substring(24, snmBinary.length());
-            String iDsFromSNM = calcBC(snmBinary);
+            String iDsFromSNM = calcSize(snmBinary);
             for (int i = Integer.parseInt(iDsFromSNM); i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
                 decimalAddressBCs += "ID " + (i-Integer.parseInt(iDsFromSNM)) + " BroadCast= " + decimalAdressTwo + "." + (i-1) + " ";
             }
@@ -84,7 +73,7 @@ public class SubnetCalculator extends Object {
         String decimalAdressTwo = decimalAdr[1];
         if (snmBinary.lastIndexOf("1") >= 24) {
             snmBinary = snmBinary.substring(24, snmBinary.length());
-            String iDsFromSNM = calcBC(snmBinary);
+            String iDsFromSNM = calcSize(snmBinary);
             String decimalAddressIDs ="";
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + " ";
@@ -92,7 +81,7 @@ public class SubnetCalculator extends Object {
             decimalAdress = "ID 0= " + decimalAdress + " " + decimalAddressIDs;
         } else if (snmBinary.lastIndexOf("1") >= 16) {
             snmBinary = snmBinary.substring(16, 24);
-            String iDsFromSNM = calcBC(snmBinary);
+            String iDsFromSNM = calcSize(snmBinary);
             String decimalAddressIDs ="";
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + ".0" + " ";
@@ -100,7 +89,7 @@ public class SubnetCalculator extends Object {
             decimalAdress = "ID 0= " + decimalAdress + " " + decimalAddressIDs;
         } else if (snmBinary.lastIndexOf("1") >= 8) {
             snmBinary = snmBinary.substring(8, 16);
-            String iDsFromSNM = calcBC(snmBinary);
+            String iDsFromSNM = calcSize(snmBinary);
             String decimalAddressIDs ="";
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + ".0.0" + " ";
@@ -108,6 +97,16 @@ public class SubnetCalculator extends Object {
             decimalAdress = decimalAdress + " " + decimalAddressIDs;
         }
         return "ID 0= " + decimalAdress;
+    }
+
+    public static String calcSize(String  snmBinary) {
+        snmBinary = snmBinary.substring(snmBinary.lastIndexOf("1"));
+        String zero = "";
+        for (int i = snmBinary.length(); i < 8; i++) {
+            zero += "0";
+        }
+        snmBinary = zero + snmBinary;
+        return Integer.parseInt(snmBinary, 2) + "";
     }
 
     public static String decimal(String binaryAddress) {

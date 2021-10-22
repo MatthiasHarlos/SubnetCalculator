@@ -43,10 +43,14 @@ public class SubnetCalculatorTest {
         Assertions.assertTrue (SubnetCalculator.splitSNM("255.255.255.255"));
     }
     @Test
-    void testsnmSequenzLength (){
+    void testsnmValidation (){
         List<Integer> testList = List.of(256, 256, 256, 256);
         Assertions.assertFalse(SubnetCalculator.snmValidation(testList));
         testList = List.of(255, 0, 255, 0);
+        Assertions.assertFalse(SubnetCalculator.snmValidation(testList));
+        testList = List.of(255, 255, 255, 1);
+        Assertions.assertFalse(SubnetCalculator.snmValidation(testList));
+        testList = List.of(255, 255, 255, 127);
         Assertions.assertFalse(SubnetCalculator.snmValidation(testList));
         testList = List.of(255, 0, 0, 0);
         Assertions.assertTrue(SubnetCalculator.snmValidation(testList));

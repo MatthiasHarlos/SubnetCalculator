@@ -71,6 +71,8 @@ public class SubnetCalculator{
         String[] decimalAdr = decimal(binaryAddress).split("\\/");
         String decimalAdress = decimalAdr[0];
         String decimalAdressTwo = decimalAdr[1];
+        String shortSNM = snmBinary.substring(0, (snmBinary.lastIndexOf("1")+1));
+        String shortSNMDecimal = shortSNM.length() + "";
         if (snmBinary.lastIndexOf("1") >= 24) {
             snmBinary = snmBinary.substring(24);
             String iDsFromSNM = calcSize(snmBinary);
@@ -78,7 +80,7 @@ public class SubnetCalculator{
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + " ";
             }
-            decimalAdress = "ID 0= " + decimalAdress + " " + decimalAddressIDs;
+            decimalAdress = "ID 0= " + decimalAdress + "/" + shortSNMDecimal + " " + decimalAddressIDs;
         } else if (snmBinary.lastIndexOf("1") >= 16 && snmBinary.lastIndexOf("1") <23) {
             snmBinary = snmBinary.substring(16, 24);
             String iDsFromSNM = calcSize(snmBinary);
@@ -86,7 +88,7 @@ public class SubnetCalculator{
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + ".0" + " ";
             }
-            decimalAdress = "ID 0= " + decimalAdress + " " + decimalAddressIDs;
+            decimalAdress = "ID 0= " + decimalAdress + "/" + shortSNMDecimal + " " + decimalAddressIDs;
         } else if (snmBinary.lastIndexOf("1") >= 8 && snmBinary.lastIndexOf("1") <15) {
             snmBinary = snmBinary.substring(8, 16);
             String iDsFromSNM = calcSize(snmBinary);
@@ -94,9 +96,9 @@ public class SubnetCalculator{
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + ".0.0" + " ";
             }
-            decimalAdress = decimalAdress + " " + decimalAddressIDs;
+            decimalAdress = decimalAdress + "/" + shortSNMDecimal + " " + decimalAddressIDs;
         }
-        return "ID 0= " + decimalAdress;
+        return "ID 0= " + decimalAdress + "\b" + "/" +  shortSNMDecimal;
     }
 
     public static String calcSize(String  snmBinary) {

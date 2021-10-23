@@ -5,6 +5,20 @@ import java.util.InputMismatchException;
 import java.util.List;
 
 public class SubnetCalculatorTest {
+
+    @Test
+    void testcalculateBC() {
+        Assertions.assertEquals(SubnetCalculator.calculateBC("00000001000000010000000100000001", "11111111111111111111111100000000"), "ID 0 BroadCast= 1.1.1.255");
+        Assertions.assertNotEquals(SubnetCalculator.calculateBC("00000001000000010000000100000001", "11111111111111111111111100000000"), "ID 0 BroadCast= 1.1.1.1");
+        Assertions.assertEquals(SubnetCalculator.calculateBC("11000000101010000000000100000001", "11111111111111111111111100000000"), "ID 0 BroadCast= 192.168.1.255");
+        Assertions.assertEquals(SubnetCalculator.calculateBC("11000000101010000000000100000001", "11111111111111110000000000000000"), "ID 0 BroadCast= 192.168.255.255");
+        Assertions.assertEquals(SubnetCalculator.calculateBC("11000000101010000000000100000001", "11111111000000000000000000000000"), "ID 0 BroadCast= 192.255.255.255");
+        Assertions.assertEquals(SubnetCalculator.calculateBC("11000000101010000000000100000001", "11111111111111111111111110000000"), "ID 0 BroadCast= 192.168.1.127 ID 128 BroadCast= 192.168.1.255 ");
+        Assertions.assertEquals(SubnetCalculator.calculateBC("11000000101010000000000100000001", "11111111111111111111111111000000"), "ID 0 BroadCast= 192.168.1.63 ID 64 BroadCast= 192.168.1.127 ID 128 BroadCast= 192.168.1.191 ID 192 BroadCast= 192.168.1.255 ");
+        Assertions.assertEquals(SubnetCalculator.calculateBC("11000000101010000000000100000001", "11111111111111111111111111100000"), "ID 0 BroadCast= 192.168.1.31 ID 32 BroadCast= 192.168.1.63 ID 64 BroadCast= 192.168.1.95 ID 96 BroadCast= 192.168.1.127 ID 128 BroadCast= 192.168.1.159 ID 160 BroadCast= 192.168.1.191 ID 192 BroadCast= 192.168.1.223 ID 224 BroadCast= 192.168.1.255 ");
+
+    }
+
     @Test
     void testcheckDots() {
         Assertions.assertFalse(SubnetCalculator.checkDots(".."));

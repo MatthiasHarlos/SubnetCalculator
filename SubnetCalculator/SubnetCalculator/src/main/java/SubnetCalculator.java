@@ -69,7 +69,7 @@ public class SubnetCalculator{
 
     public static String turnIDsIntoDecimal(String binaryAddress, String snmBinary) {
         String[] decimalAdr = decimal(binaryAddress).split("\\/");
-        String decimalAdress = decimalAdr[0];
+        String decimalAdress = decimalAdr[0] + " ";
         String decimalAdressTwo = decimalAdr[1];
         String shortSNM = snmBinary.substring(0, (snmBinary.lastIndexOf("1")+1));
         String shortSNMDecimal = shortSNM.length() + "";
@@ -80,7 +80,7 @@ public class SubnetCalculator{
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + " ";
             }
-            decimalAdress = decimalAdress + "/" + shortSNMDecimal + " " + decimalAddressIDs;
+            decimalAdress = decimalAdress + "\b" + "/" + shortSNMDecimal + " " + decimalAddressIDs;
         } else if (snmBinary.lastIndexOf("1") >= 16 && snmBinary.lastIndexOf("1") <23) {
             snmBinary = snmBinary.substring(16, 24);
             String iDsFromSNM = calcSize(snmBinary);
@@ -88,7 +88,7 @@ public class SubnetCalculator{
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + ".0" + " ";
             }
-            decimalAdress = decimalAdress + "/" + shortSNMDecimal + " " + decimalAddressIDs;
+            decimalAdress = decimalAdress + "\b" + "/" + shortSNMDecimal + " " + decimalAddressIDs;
         } else if (snmBinary.lastIndexOf("1") >= 8 && snmBinary.lastIndexOf("1") <15) {
             snmBinary = snmBinary.substring(8, 16);
             String iDsFromSNM = calcSize(snmBinary);
@@ -96,7 +96,7 @@ public class SubnetCalculator{
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + ".0.0" + " ";
             }
-            decimalAdress = decimalAdress + "/" + shortSNMDecimal + " " + decimalAddressIDs;
+            decimalAdress = decimalAdress + "\b" + "/" + shortSNMDecimal + " " + decimalAddressIDs;
         }
         return "ID 0= " + decimalAdress + "\b" + "/" +  shortSNMDecimal;
     }
@@ -151,33 +151,22 @@ public class SubnetCalculator{
     }
 
     private static String checkUserIPInput() {
-        System.out.println("Bitte gib eine IP im Format: 1.1.1.1 ein!");
-        Scanner scan = new Scanner(System.in);
-        String userInput = scan.nextLine();
-        if (!checkDots(userInput)) {
-            checkUserIPInput();
-        } else if (!isLenghtRight(userInput)) {
-            checkUserIPInput();
-        } else if (!splitIP(userInput)) {
-            checkUserIPInput();
-        }
+        String userInput;
+        do {
+            System.out.println("Bitte gib eine IP im Format: 1.1.1.1 ein!");
+            Scanner scan = new Scanner(System.in);
+            userInput = scan.nextLine();
+        } while (!checkDots(userInput) || !isLenghtRight(userInput) || !splitIP(userInput));
         return stringtoBinaryString(userInput);
     }
 
     private static String checkUserSNMInput() {
         String userInput;
-        while (true) {
+        do {
             System.out.println("Bitte gib eine Subnetzmaske ein!");
             Scanner scan = new Scanner(System.in);
             userInput = scan.nextLine();
-            if (!checkDots(userInput)) {
-                checkUserSNMInput();
-            } else if (!isLenghtRight(userInput)) {
-                checkUserSNMInput();
-            } else if (splitSNM(userInput)) {
-                break;
-            }
-        }
+        } while (!checkDots(userInput) || !isLenghtRight(userInput) || !splitSNM(userInput));
         return stringtoBinaryString(userInput);
     }
 

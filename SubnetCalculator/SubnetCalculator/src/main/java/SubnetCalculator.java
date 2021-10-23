@@ -64,10 +64,10 @@ public class SubnetCalculator{
         int logicalAnd = (snmBinary.lastIndexOf("1")+1);
         ipBinary = ipBinary.substring(0, logicalAnd);
         String iDBinary = ipBinary;
-        return turnIPIntoDecimal(iDBinary, snmBinary);
+        return turnIDsIntoDecimal(iDBinary, snmBinary);
     }
 
-    public static String turnIPIntoDecimal(String binaryAddress, String snmBinary) {
+    public static String turnIDsIntoDecimal(String binaryAddress, String snmBinary) {
         String[] decimalAdr = decimal(binaryAddress).split("\\/");
         String decimalAdress = decimalAdr[0];
         String decimalAdressTwo = decimalAdr[1];
@@ -80,7 +80,7 @@ public class SubnetCalculator{
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + " ";
             }
-            decimalAdress = "ID 0= " + decimalAdress + "/" + shortSNMDecimal + " " + decimalAddressIDs;
+            decimalAdress = decimalAdress + "/" + shortSNMDecimal + " " + decimalAddressIDs;
         } else if (snmBinary.lastIndexOf("1") >= 16 && snmBinary.lastIndexOf("1") <23) {
             snmBinary = snmBinary.substring(16, 24);
             String iDsFromSNM = calcSize(snmBinary);
@@ -88,7 +88,7 @@ public class SubnetCalculator{
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + ".0" + " ";
             }
-            decimalAdress = "ID 0= " + decimalAdress + "/" + shortSNMDecimal + " " + decimalAddressIDs;
+            decimalAdress = decimalAdress + "/" + shortSNMDecimal + " " + decimalAddressIDs;
         } else if (snmBinary.lastIndexOf("1") >= 8 && snmBinary.lastIndexOf("1") <15) {
             snmBinary = snmBinary.substring(8, 16);
             String iDsFromSNM = calcSize(snmBinary);
@@ -251,7 +251,7 @@ public class SubnetCalculator{
     public static boolean snmValidation(List<Integer> snmSequenzList) {
         for (int i = 0; i < 4; i++) {
             if (snmSequenzList.get(i) > 255  || snmSequenzList.get(i) < 128 && snmSequenzList.get(i) >0 ) {
-                System.out.println("Zahl zu groß!");
+                System.out.println("Bitte geben Sie Zahlen zwischen 128 und 255 oder 0 an!");
                 return false;
             }
         }
@@ -273,7 +273,7 @@ public class SubnetCalculator{
             }
         }
         if (isZeroFound && isAfterZeroAOne) {
-            System.out.println("Eingabe ungültig!");
+            System.out.println("Eingabe ungültig! Für die SNM sind lediglich die Zahlen 0, 128, 192, 224, 240, 248, 252, 254, 255 erlaubt!");
             return false;
         }
         return true;

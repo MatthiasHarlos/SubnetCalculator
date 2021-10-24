@@ -122,6 +122,10 @@ public class SubnetCalculator{
                 System.out.println("Bitte geben Sie Zahlen zwischen 128 und 255 oder 0 an!");
                 return false;
             }
+            if (snmSequenzList.get(3) >252) {
+                System.out.println("Diese Subnetzmaske lässt Sie kein kommunikatives Netzwerk aufbauen");
+                return false;
+            }
         }
         String binarySNM = "";
         for (int i = 0; i < 4; i++) {

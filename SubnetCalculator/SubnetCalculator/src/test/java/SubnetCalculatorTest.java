@@ -131,6 +131,10 @@ public class SubnetCalculatorTest {
         Assertions.assertFalse(SubnetCalculator.snmValidation(testList));
         testList = List.of(255, 0, 255, 0);
         Assertions.assertFalse(SubnetCalculator.snmValidation(testList));
+        testList = List.of(255, 255, 255, 254);
+        Assertions.assertFalse(SubnetCalculator.snmValidation(testList));
+        testList = List.of(255, 255, 255, 252);
+        Assertions.assertTrue(SubnetCalculator.snmValidation(testList));
         testList = List.of(255, 255, 255, 1);
         Assertions.assertFalse(SubnetCalculator.snmValidation(testList));
         testList = List.of(255, 255, 255, 127);

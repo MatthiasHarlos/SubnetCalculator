@@ -9,24 +9,10 @@ public class SubnetCalculator{
         System.out.println("Willkommen beim Netzwerkrechner!");
         String ipBinary = checkUserIPInput();
         String snmBinary = checkUserSNMInput();
-        String iD = calculateIDs(ipBinary, snmBinary);
-        String bc = calculateBC(ipBinary, snmBinary);
-        resultOutputofIDsBCs(iD, bc);
-    }
-
-    public static void resultOutputofIDsBCs(String iD, String bc) {
-        List<String> iDList = Arrays.asList(iD.split("\\|"));
-        List<String> bcList = Arrays.asList(bc.split("\\|"));
-        List<List<String>> resultLists = new ArrayList<>();
-        for (int i = 0; i < iDList.size(); i++) {
-            List<String> result = new ArrayList<>();
-            result.add(iDList.get(i));
-            result.add(bcList.get(i));
-            resultLists.add(result);
-        }
-        for (int i = 0; i< resultLists.size(); i++) {
-            System.out.println(resultLists.get(i));
-        }
+        String iDs = calculateIDs(ipBinary, snmBinary);
+        String bCs = calculateBCs(ipBinary, snmBinary);
+        List<List<String>> iPs = calculateIPs(iDs, bCs);
+        resultOutputofIDsBCsIPs(iDs, bCs, iPs);
     }
 
     private static String checkUserIPInput() {
@@ -161,7 +147,7 @@ public class SubnetCalculator{
         return true;
     }
 
-    public static String calculateBC(String ipBinary, String snmBinary) {
+    public static String calculateBCs(String ipBinary, String snmBinary) {
         int logicalAnd = (snmBinary.lastIndexOf("1")+1);
         ipBinary = ipBinary.substring(0, logicalAnd);
         String iDBinary = ipBinary;
@@ -284,5 +270,57 @@ public class SubnetCalculator{
             decimalAdress = decimalAdress + ".0.0.0";
         }
         return decimalAdress + "/" +decimalAdressTwo;
+    }
+
+    public static List<List<String>> calculateIPs(String iDs, String bCs) {
+        List<String> iDList = Arrays.asList(iDs.split("\\|"));
+        List<String> bcList = Arrays.asList(bCs.split("\\|"));
+        List<List<String>> resultLists = new ArrayList<>();
+        for (int i = 0; i < iDList.size(); i++) {
+            List<String> result = new ArrayList<>();
+            if ( Integer.parseInt(iDList.get(i).substring(iDList.get(i).lastIndexOf("/")+1)) >= 24) {
+                int startID = iDList.get(i).indexOf(" ")+1;
+                int endID = iDList.get(i).indexOf(("="));
+                int firstIPs = Integer.parseInt(iDList.get(i).substring(startID, endID));
+                firstIPs++;
+                iDList.set(i, ("Erste IP = " + iDList.get(i).substring(iDList.get(i).indexOf("=")+2, iDList.get(i).lastIndexOf(".")+1)+firstIPs));
+                result.add(iDList.get(i));
+            } else if ( Integer.parseInt(iDList.get(i).substring(iDList.get(i).lastIndexOf("/")+1)) < 24) {
+                iDList.set(i, ("Erste IP = " + iDList.get(i).substring(iDList.get(i).indexOf("=")+2, iDList.get(i).lastIndexOf(".")+1)+"1"));
+                result.add(iDList.get(i));
+            }
+
+
+            int startIDforLastIP = bcList.get(i).lastIndexOf(".") + 1;
+            int endIDforLastIP = bcList.get(i).length();
+            int lastIPs = Integer.parseInt(bcList.get(i).substring(startIDforLastIP, endIDforLastIP));
+            lastIPs--;
+            bcList.set(i, ("Letzte IP = " + bcList.get(i).substring(bcList.get(i).indexOf("=") + 2, bcList.get(i).lastIndexOf(".") + 1) + lastIPs));
+            result.add(bcList.get(i));
+            resultLists.add(result);
+        }
+        for (int i = 0; i< resultLists.size(); i++) {
+            //System.out.println(resultLists.get(i));
+        }
+        return resultLists;
+    }
+
+    public static void resultOutputofIDsBCsIPs(String iDs, String bCs, List<List<String>> iPs) {
+        List<String> iDList = Arrays.asList(iDs.split("\\|"));
+        List<String> bcList = Arrays.asList(bCs.split("\\|"));
+        List<List<String>> resultLists = new ArrayList<>();
+        for (int i = 0; i < iDList.size(); i++) {
+            List<String> result = new ArrayList<>();
+            result.add(iDList.get(i));
+            result.add(bcList.get(i));
+            result.add(iPs.get(i).get(0));
+            result.add(iPs.get(i).get(1));
+            resultLists.add(result);
+        }
+
+
+        for (int i = 0; i< resultLists.size(); i++) {
+            System.out.println(resultLists.get(i));
+        }
     }
 }

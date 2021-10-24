@@ -1,24 +1,23 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.InputMismatchException;
 import java.util.List;
 
 public class SubnetCalculatorTest {
 
     @Test
     void testcalculateBC() {
-        Assertions.assertEquals(SubnetCalculator.calculateBC("00000001000000010000000100000001", "11111111111111111111111100000000"), "BroadCast= 1.1.1.255|");
-        Assertions.assertNotEquals(SubnetCalculator.calculateBC("00000001000000010000000100000001", "11111111111111111111111100000000"), "BroadCast= 1.1.1.1|");
-        Assertions.assertEquals(SubnetCalculator.calculateBC("11000000101010000000000100000001", "11111111111111111111111100000000"), "BroadCast= 192.168.1.255|");
-        Assertions.assertEquals(SubnetCalculator.calculateBC("11000000101010000000000100000001", "11111111111111110000000000000000"), "BroadCast= 192.168.255.255|");
-        Assertions.assertEquals(SubnetCalculator.calculateBC("11000000101010000000000100000001", "11111111000000000000000000000000"), "BroadCast= 192.255.255.255|");
-        Assertions.assertEquals(SubnetCalculator.calculateBC("11000000101010000000000100000001", "11111111111111111111111110000000"), "BroadCast= 192.168.1.127|BroadCast= 192.168.1.255|");
-        Assertions.assertEquals(SubnetCalculator.calculateBC("11000000101010000000000100000001", "11111111111111111111111111000000"), "BroadCast= 192.168.1.63|BroadCast= 192.168.1.127|" +
+        Assertions.assertEquals(SubnetCalculator.calculateBCs("00000001000000010000000100000001", "11111111111111111111111100000000"), "BroadCast= 1.1.1.255|");
+        Assertions.assertNotEquals(SubnetCalculator.calculateBCs("00000001000000010000000100000001", "11111111111111111111111100000000"), "BroadCast= 1.1.1.1|");
+        Assertions.assertEquals(SubnetCalculator.calculateBCs("11000000101010000000000100000001", "11111111111111111111111100000000"), "BroadCast= 192.168.1.255|");
+        Assertions.assertEquals(SubnetCalculator.calculateBCs("11000000101010000000000100000001", "11111111111111110000000000000000"), "BroadCast= 192.168.255.255|");
+        Assertions.assertEquals(SubnetCalculator.calculateBCs("11000000101010000000000100000001", "11111111000000000000000000000000"), "BroadCast= 192.255.255.255|");
+        Assertions.assertEquals(SubnetCalculator.calculateBCs("11000000101010000000000100000001", "11111111111111111111111110000000"), "BroadCast= 192.168.1.127|BroadCast= 192.168.1.255|");
+        Assertions.assertEquals(SubnetCalculator.calculateBCs("11000000101010000000000100000001", "11111111111111111111111111000000"), "BroadCast= 192.168.1.63|BroadCast= 192.168.1.127|" +
                 "BroadCast= 192.168.1.191|BroadCast= 192.168.1.255|");
-        Assertions.assertEquals(SubnetCalculator.calculateBC("11000000101010000000000100000001", "11111111111111111111111111100000"), "BroadCast= 192.168.1.31|BroadCast= 192.168.1.63|" +
+        Assertions.assertEquals(SubnetCalculator.calculateBCs("11000000101010000000000100000001", "11111111111111111111111111100000"), "BroadCast= 192.168.1.31|BroadCast= 192.168.1.63|" +
                 "BroadCast= 192.168.1.95|BroadCast= 192.168.1.127|BroadCast= 192.168.1.159|BroadCast= 192.168.1.191|BroadCast= 192.168.1.223|BroadCast= 192.168.1.255|");
-        Assertions.assertEquals(SubnetCalculator.calculateBC("11000000000000010000000100000001", "11111111111111000000000000000000"), "BroadCast= 192.3.255.255|BroadCast= 192.7.255.255|" +
+        Assertions.assertEquals(SubnetCalculator.calculateBCs("11000000000000010000000100000001", "11111111111111000000000000000000"), "BroadCast= 192.3.255.255|BroadCast= 192.7.255.255|" +
                 "BroadCast= 192.11.255.255|BroadCast= 192.15.255.255|BroadCast= 192.19.255.255|BroadCast= 192.23.255.255|BroadCast= 192.27.255.255|BroadCast= 192.31.255.255|BroadCast= 192.35.255.255|BroadCast= 192.39.255.255|" +
                 "BroadCast= 192.43.255.255|BroadCast= 192.47.255.255|BroadCast= 192.51.255.255|BroadCast= 192.55.255.255|BroadCast= 192.59.255.255|BroadCast= 192.63.255.255|BroadCast= 192.67.255.255|BroadCast= 192.71.255.255|" +
                 "BroadCast= 192.75.255.255|BroadCast= 192.79.255.255|BroadCast= 192.83.255.255|BroadCast= 192.87.255.255|BroadCast= 192.91.255.255|BroadCast= 192.95.255.255|BroadCast= 192.99.255.255|BroadCast= 192.103.255.255|" +

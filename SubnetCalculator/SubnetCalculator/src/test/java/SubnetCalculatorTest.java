@@ -122,7 +122,7 @@ public class SubnetCalculatorTest {
         Assertions.assertFalse(SubnetCalculator.splitSNM("a.1.a.1"));
         Assertions.assertFalse(SubnetCalculator.splitSNM("254.1.1.1"));
         Assertions.assertTrue (SubnetCalculator.splitSNM("255.0.0.0"));
-        Assertions.assertTrue (SubnetCalculator.splitSNM("255.255.255.255"));
+        Assertions.assertTrue (SubnetCalculator.splitSNM("255.255.255.252"));
     }
 
     @Test

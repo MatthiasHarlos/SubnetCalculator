@@ -256,8 +256,8 @@ public class SubnetCalculator{
             }
         }
         String decimalAdress = "";
-        for (int i = 0; i < seqList.size(); i++) {
-            decimalAdress += Integer.parseInt(seqList.get(i), 2) + ".";
+        for (String s : seqList) {
+            decimalAdress += Integer.parseInt(s, 2) + ".";
         }
         decimalAdress = decimalAdress.substring(0, (decimalAdress.length() - 1));
         String decimalAdressTwo = decimalAdress;
@@ -289,8 +289,6 @@ public class SubnetCalculator{
                 iDList.set(i, ("Erste IP = " + iDList.get(i).substring(iDList.get(i).indexOf("=")+2, iDList.get(i).lastIndexOf(".")+1)+"1"));
                 result.add(iDList.get(i));
             }
-
-
             int startIDforLastIP = bcList.get(i).lastIndexOf(".") + 1;
             int endIDforLastIP = bcList.get(i).length();
             int lastIPs = Integer.parseInt(bcList.get(i).substring(startIDforLastIP, endIDforLastIP));
@@ -298,9 +296,6 @@ public class SubnetCalculator{
             bcList.set(i, ("Letzte IP = " + bcList.get(i).substring(bcList.get(i).indexOf("=") + 2, bcList.get(i).lastIndexOf(".") + 1) + lastIPs));
             result.add(bcList.get(i));
             resultLists.add(result);
-        }
-        for (int i = 0; i< resultLists.size(); i++) {
-            //System.out.println(resultLists.get(i));
         }
         return resultLists;
     }
@@ -317,10 +312,8 @@ public class SubnetCalculator{
             result.add(iPs.get(i).get(1));
             resultLists.add(result);
         }
-
-
-        for (int i = 0; i< resultLists.size(); i++) {
-            System.out.println(resultLists.get(i));
+        for (List<String> resultList : resultLists) {
+            System.out.println(resultList);
         }
     }
 }

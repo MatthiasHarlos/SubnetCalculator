@@ -37,16 +37,12 @@ public class SubnetCalculator{
 
     public static String stringtoBinaryString(String userInput) {
         List<String> stringList = Arrays.asList(userInput.split("\\."));
-        String binaryStringResult = "";
+        StringBuilder binaryStringResult = new StringBuilder();
         for (int i = 3; i >= 0; i--) {
             String binaryString = Integer.toBinaryString(Integer.parseInt(stringList.get(i)));
-            String zeros = "";
-            for(int y = binaryString.length(); y<8; y++){
-                zeros += "0";
-            }
-            binaryStringResult =  zeros + binaryString + binaryStringResult;
+            binaryStringResult.insert(0, "0".repeat(Math.max(0, 8 - binaryString.length())) + binaryString);
         }
-        return binaryStringResult;
+        return binaryStringResult.toString();
     }
 
     public static boolean checkDots(String ip) {
@@ -127,9 +123,9 @@ public class SubnetCalculator{
                 return false;
             }
         }
-        String binarySNM = "";
+        StringBuilder binarySNM = new StringBuilder();
         for (int i = 0; i < 4; i++) {
-            binarySNM += Integer.toBinaryString(snmSequenzList.get(i));
+            binarySNM.append(Integer.toBinaryString(snmSequenzList.get(i)));
         }
         boolean isZeroFound = false;
         boolean isAfterZeroAOne = false;
@@ -159,10 +155,10 @@ public class SubnetCalculator{
     }
 
     public static String turnIntoDecimalBC(String binaryAddress, String snmBinary) {
-        String[] decimalAdr = decimal(binaryAddress).split("\\/");
+        String[] decimalAdr = decimal(binaryAddress).split("/");
         String decimalAdress = decimalAdr[0];
         String decimalAdressTwo = decimalAdr[1];
-        String decimalAddressBCs = "";
+        StringBuilder decimalAddressBCs = new StringBuilder();
         if (snmBinary.lastIndexOf("1") == 23) {
             decimalAdress = "BroadCast= " + decimalAdressTwo+".255|";
         } else if (snmBinary.lastIndexOf("1") == 15) {
@@ -171,9 +167,9 @@ public class SubnetCalculator{
             snmBinary = snmBinary.substring(16, 24);
             String iDsFromSNM = calcSize(snmBinary);
             for (int i = Integer.parseInt(iDsFromSNM); i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
-                decimalAddressBCs += "BroadCast= " + decimalAdressTwo + "." + (i-1) + ".255" + "|";
+                decimalAddressBCs.append("BroadCast= ").append(decimalAdressTwo).append(".").append(i - 1).append(".255").append("|");
             }
-            decimalAdress = decimalAddressBCs;
+            decimalAdress = decimalAddressBCs.toString();
         }
         else if (snmBinary.lastIndexOf("1") == 7) {
             decimalAdress = "BroadCast= " + decimalAdressTwo+".255.255.255|";
@@ -181,17 +177,17 @@ public class SubnetCalculator{
             snmBinary = snmBinary.substring(8, 16);
             String iDsFromSNM = calcSize(snmBinary);
             for (int i = Integer.parseInt(iDsFromSNM); i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
-                decimalAddressBCs += "BroadCast= " + decimalAdressTwo + "." + (i-1) + ".255.255" + "|";
+                decimalAddressBCs.append("BroadCast= ").append(decimalAdressTwo).append(".").append(i - 1).append(".255.255").append("|");
             }
-            decimalAdress = decimalAddressBCs;
+            decimalAdress = decimalAddressBCs.toString();
         }
         if (snmBinary.lastIndexOf("1") >= 24) {
             snmBinary = snmBinary.substring(24);
             String iDsFromSNM = calcSize(snmBinary);
             for (int i = Integer.parseInt(iDsFromSNM); i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
-                decimalAddressBCs += "BroadCast= " + decimalAdressTwo + "." + (i-1) + "|";
+                decimalAddressBCs.append("BroadCast= ").append(decimalAdressTwo).append(".").append(i - 1).append("|");
             }
-            decimalAdress = decimalAddressBCs;
+            decimalAdress = decimalAddressBCs.toString();
         }
         return decimalAdress;
     }
@@ -204,7 +200,7 @@ public class SubnetCalculator{
     }
 
     public static String turnIDsIntoDecimal(String binaryAddress, String snmBinary) {
-        String[] decimalAdr = decimal(binaryAddress).split("\\/");
+        String[] decimalAdr = decimal(binaryAddress).split("/");
         String decimalAdress = decimalAdr[0];
         String decimalAdressTwo = decimalAdr[1];
         String shortSNM = snmBinary.substring(0, (snmBinary.lastIndexOf("1")+1));
@@ -212,27 +208,27 @@ public class SubnetCalculator{
         if (snmBinary.lastIndexOf("1") >= 24) {
             snmBinary = snmBinary.substring(24);
             String iDsFromSNM = calcSize(snmBinary);
-            String decimalAddressIDs ="";
+            StringBuilder decimalAddressIDs = new StringBuilder();
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
-                decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + "/" + shortSNMDecimal + "|";
+                decimalAddressIDs.append("ID ").append(i).append("= ").append(decimalAdressTwo).append(".").append(i).append("/").append(shortSNMDecimal).append("|");
             }
             decimalAdress = decimalAdress + "/" + shortSNMDecimal + "|" + decimalAddressIDs;
             decimalAdress = decimalAdress.substring(0,decimalAdress.lastIndexOf("/"));
         } else if (snmBinary.lastIndexOf("1") >= 16 && snmBinary.lastIndexOf("1") <23) {
             snmBinary = snmBinary.substring(16, 24);
             String iDsFromSNM = calcSize(snmBinary);
-            String decimalAddressIDs ="";
+            StringBuilder decimalAddressIDs = new StringBuilder();
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
-                decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + ".0/" + shortSNMDecimal + "|";
+                decimalAddressIDs.append("ID ").append(i).append("= ").append(decimalAdressTwo).append(".").append(i).append(".0/").append(shortSNMDecimal).append("|");
             }
             decimalAdress = decimalAdress + "/" + shortSNMDecimal + "|" + decimalAddressIDs;
             decimalAdress = decimalAdress.substring(0,decimalAdress.lastIndexOf("/"));
         } else if (snmBinary.lastIndexOf("1") >= 8 && snmBinary.lastIndexOf("1") <15) {
             snmBinary = snmBinary.substring(8, 16);
             String iDsFromSNM = calcSize(snmBinary);
-            String decimalAddressIDs ="";
+            StringBuilder decimalAddressIDs = new StringBuilder();
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
-                decimalAddressIDs += "ID " + i + "= " + decimalAdressTwo+"."+i + ".0.0/" + shortSNMDecimal + "|";
+                decimalAddressIDs.append("ID ").append(i).append("= ").append(decimalAdressTwo).append(".").append(i).append(".0.0/").append(shortSNMDecimal).append("|");
             }
             decimalAdress = decimalAdress + "/" + shortSNMDecimal + "|" + decimalAddressIDs;
             decimalAdress = decimalAdress.substring(0,decimalAdress.lastIndexOf("/"));
@@ -243,11 +239,7 @@ public class SubnetCalculator{
 
     public static String calcSize(String  snmBinary) {
         snmBinary = snmBinary.substring(snmBinary.lastIndexOf("1"));
-        String zero = "";
-        for (int i = snmBinary.length(); i < 8; i++) {
-            zero += "0";
-        }
-        snmBinary = zero + snmBinary;
+        snmBinary = "0".repeat(Math.max(0, 8 - snmBinary.length())) + snmBinary;
         return Integer.parseInt(snmBinary, 2) + "";
     }
 
@@ -259,19 +251,19 @@ public class SubnetCalculator{
             } catch (StringIndexOutOfBoundsException ignored) {
             }
         }
-        String decimalAdress = "";
+        StringBuilder decimalAdress = new StringBuilder();
         for (String s : seqList) {
-            decimalAdress += Integer.parseInt(s, 2) + ".";
+            decimalAdress.append(Integer.parseInt(s, 2)).append(".");
         }
-        decimalAdress = decimalAdress.substring(0, (decimalAdress.length() - 1));
-        String decimalAdressTwo = decimalAdress;
-        int counter = StringUtils.countMatches(decimalAdress, ".");
+        decimalAdress = new StringBuilder(decimalAdress.substring(0, (decimalAdress.length() - 1)));
+        String decimalAdressTwo = decimalAdress.toString();
+        int counter = StringUtils.countMatches(decimalAdress.toString(), ".");
         if (counter == 2) {
-            decimalAdress = decimalAdress + ".0";
+            decimalAdress.append(".0");
         } else if (counter == 1) {
-            decimalAdress = decimalAdress + ".0.0";
+            decimalAdress.append(".0.0");
         } else if (counter == 0) {
-            decimalAdress = decimalAdress + ".0.0.0";
+            decimalAdress.append(".0.0.0");
         }
         return decimalAdress + "/" +decimalAdressTwo;
     }

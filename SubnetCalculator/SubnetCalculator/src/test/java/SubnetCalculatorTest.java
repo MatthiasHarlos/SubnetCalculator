@@ -7,6 +7,7 @@ import java.util.List;
 public class SubnetCalculatorTest {
 
     IPValidator validator = new IPValidator();
+    Calculator calculator = new Calculator();
 
     @Test
     void testCalculateIPs() {
@@ -17,7 +18,7 @@ public class SubnetCalculatorTest {
             iPs.add("Letzte IP = 192."+(i+3)+".255.254");
             resultLists.add(iPs);
         }
-        Assertions.assertEquals(SubnetCalculator.calculateIPs("ID 0= 192.0.0.0/14|ID 4= 192.4.0.0/14|ID 8= 192.8.0.0/14|ID 12= 192.12.0.0/14|\" +\n" +
+        Assertions.assertEquals(calculator.calculateIPs("ID 0= 192.0.0.0/14|ID 4= 192.4.0.0/14|ID 8= 192.8.0.0/14|ID 12= 192.12.0.0/14|\" +\n" +
                 "                \"ID 16= 192.16.0.0/14|ID 20= 192.20.0.0/14|ID 24= 192.24.0.0/14|ID 28= 192.28.0.0/14|ID 32= 192.32.0.0/14|ID 36= 192.36.0.0/14|ID 40= 192.40.0.0/14|ID 44= 192.44.0.0/14|ID 48= 192.48.0.0/14|ID 52= 192.52.0.0/14|ID 56= 192.56.0.0/14|\" +\n" +
                 "                \"ID 60= 192.60.0.0/14|ID 64= 192.64.0.0/14|ID 68= 192.68.0.0/14|ID 72= 192.72.0.0/14|ID 76= 192.76.0.0/14|ID 80= 192.80.0.0/14|ID 84= 192.84.0.0/14|ID 88= 192.88.0.0/14|ID 92= 192.92.0.0/14|ID 96= 192.96.0.0/14|ID 100= 192.100.0.0/14|\" +\n" +
                 "                \"ID 104= 192.104.0.0/14|ID 108= 192.108.0.0/14|ID 112= 192.112.0.0/14|ID 116= 192.116.0.0/14|ID 120= 192.120.0.0/14|ID 124= 192.124.0.0/14|ID 128= 192.128.0.0/14|ID 132= 192.132.0.0/14|ID 136= 192.136.0.0/14|ID 140= 192.140.0.0/14|\" +\n" +
@@ -39,7 +40,7 @@ public class SubnetCalculatorTest {
             iPs.add("Letzte IP = 192.168.1."+(i+30));
             resultLists2.add(iPs);
         }
-        Assertions.assertEquals(SubnetCalculator.calculateIPs("ID 0= 192.168.1.0/27|ID 32= 192.168.1.32/27|ID 64= 192.168.1.64/27|" +
+        Assertions.assertEquals(calculator.calculateIPs("ID 0= 192.168.1.0/27|ID 32= 192.168.1.32/27|ID 64= 192.168.1.64/27|" +
                 "ID 96= 192.168.1.96/27|ID 128= 192.168.1.128/27|ID 160= 192.168.1.160/27|ID 192= 192.168.1.192/27|ID 224= 192.168.1.224/27|" ,
                 "BroadCast= 192.168.1.31|BroadCast= 192.168.1.63|BroadCast= 192.168.1.95|BroadCast= 192.168.1.127|BroadCast= 192.168.1.159|" +
                         "BroadCast= 192.168.1.191|BroadCast= 192.168.1.223|BroadCast= 192.168.1.255|"), resultLists2);
@@ -48,17 +49,17 @@ public class SubnetCalculatorTest {
 
     @Test
     void testturnIntoDecimalBC() {
-        Assertions.assertEquals(SubnetCalculator.turnIntoDecimalBC("11111111111111111111111100000000", "1.1.1.0", "1.1.1"), "BroadCast= 1.1.1.255|");
-        Assertions.assertNotEquals(SubnetCalculator.turnIntoDecimalBC( "11111111111111111111111100000000","1.1.1.0", "1.1.1"), "BroadCast= 1.1.1.1|");
-        Assertions.assertEquals(SubnetCalculator.turnIntoDecimalBC( "11111111111111111111111100000000", "192.168.1.0", "192.168.1"), "BroadCast= 192.168.1.255|");
-        Assertions.assertEquals(SubnetCalculator.turnIntoDecimalBC( "11111111111111110000000000000000", "192.168.0.0", "192.168"), "BroadCast= 192.168.255.255|");
-        Assertions.assertEquals(SubnetCalculator.turnIntoDecimalBC( "11111111000000000000000000000000", "192.0.0.0", "192"), "BroadCast= 192.255.255.255|");
-        Assertions.assertEquals(SubnetCalculator.turnIntoDecimalBC( "11111111111111111111111110000000", "192.168.1.0", "192.168.1"), "BroadCast= 192.168.1.127|BroadCast= 192.168.1.255|");
-        Assertions.assertEquals(SubnetCalculator.turnIntoDecimalBC( "11111111111111111111111111000000", "192.168.1.0", "192.168.1"), "BroadCast= 192.168.1.63|BroadCast= 192.168.1.127|" +
+        Assertions.assertEquals(calculator.turnIntoDecimalBC("11111111111111111111111100000000", "1.1.1.0", "1.1.1"), "BroadCast= 1.1.1.255|");
+        Assertions.assertNotEquals(calculator.turnIntoDecimalBC( "11111111111111111111111100000000","1.1.1.0", "1.1.1"), "BroadCast= 1.1.1.1|");
+        Assertions.assertEquals(calculator.turnIntoDecimalBC( "11111111111111111111111100000000", "192.168.1.0", "192.168.1"), "BroadCast= 192.168.1.255|");
+        Assertions.assertEquals(calculator.turnIntoDecimalBC( "11111111111111110000000000000000", "192.168.0.0", "192.168"), "BroadCast= 192.168.255.255|");
+        Assertions.assertEquals(calculator.turnIntoDecimalBC( "11111111000000000000000000000000", "192.0.0.0", "192"), "BroadCast= 192.255.255.255|");
+        Assertions.assertEquals(calculator.turnIntoDecimalBC( "11111111111111111111111110000000", "192.168.1.0", "192.168.1"), "BroadCast= 192.168.1.127|BroadCast= 192.168.1.255|");
+        Assertions.assertEquals(calculator.turnIntoDecimalBC( "11111111111111111111111111000000", "192.168.1.0", "192.168.1"), "BroadCast= 192.168.1.63|BroadCast= 192.168.1.127|" +
                 "BroadCast= 192.168.1.191|BroadCast= 192.168.1.255|");
-        Assertions.assertEquals(SubnetCalculator.turnIntoDecimalBC( "11111111111111111111111111100000", "192.168.1.0", "192.168.1"), "BroadCast= 192.168.1.31|BroadCast= 192.168.1.63|" +
+        Assertions.assertEquals(calculator.turnIntoDecimalBC( "11111111111111111111111111100000", "192.168.1.0", "192.168.1"), "BroadCast= 192.168.1.31|BroadCast= 192.168.1.63|" +
                 "BroadCast= 192.168.1.95|BroadCast= 192.168.1.127|BroadCast= 192.168.1.159|BroadCast= 192.168.1.191|BroadCast= 192.168.1.223|BroadCast= 192.168.1.255|");
-        Assertions.assertEquals(SubnetCalculator.turnIntoDecimalBC( "11111111111111000000000000000000", "192.0.0.0", "192"), "BroadCast= 192.3.255.255|BroadCast= 192.7.255.255|" +
+        Assertions.assertEquals(calculator.turnIntoDecimalBC( "11111111111111000000000000000000", "192.0.0.0", "192"), "BroadCast= 192.3.255.255|BroadCast= 192.7.255.255|" +
                 "BroadCast= 192.11.255.255|BroadCast= 192.15.255.255|BroadCast= 192.19.255.255|BroadCast= 192.23.255.255|BroadCast= 192.27.255.255|BroadCast= 192.31.255.255|BroadCast= 192.35.255.255|BroadCast= 192.39.255.255|" +
                 "BroadCast= 192.43.255.255|BroadCast= 192.47.255.255|BroadCast= 192.51.255.255|BroadCast= 192.55.255.255|BroadCast= 192.59.255.255|BroadCast= 192.63.255.255|BroadCast= 192.67.255.255|BroadCast= 192.71.255.255|" +
                 "BroadCast= 192.75.255.255|BroadCast= 192.79.255.255|BroadCast= 192.83.255.255|BroadCast= 192.87.255.255|BroadCast= 192.91.255.255|BroadCast= 192.95.255.255|BroadCast= 192.99.255.255|BroadCast= 192.103.255.255|" +
@@ -71,15 +72,15 @@ public class SubnetCalculatorTest {
 
     @Test
     void testturnIDsIntoDecimal() {
-        Assertions.assertEquals(SubnetCalculator.turnIDsIntoDecimal( "11111111111111111111111100000000", "1.1.1.0", "1.1.1"), "ID 0= 1.1.1.0/24|");
-        Assertions.assertNotEquals(SubnetCalculator.turnIDsIntoDecimal( "11111111111111111111111100000000", "1.1.1.0", "1.1.1"), "ID 0= 1.1.1.1");
-        Assertions.assertEquals(SubnetCalculator.turnIDsIntoDecimal( "11111111111111111111111100000000", "192.168.1.0", "192.168.1"), "ID 0= 192.168.1.0/24|");
-        Assertions.assertEquals(SubnetCalculator.turnIDsIntoDecimal( "11111111111111110000000000000000", "192.168.0.0", "192.168"), "ID 0= 192.168.0.0/16|");
-        Assertions.assertEquals(SubnetCalculator.turnIDsIntoDecimal( "11111111000000000000000000000000", "192.0.0.0", "192"), "ID 0= 192.0.0.0/8|");
-        Assertions.assertEquals(SubnetCalculator.turnIDsIntoDecimal( "11111111111111111111111110000000", "192.168.1.0", "192.168.1"), "ID 0= 192.168.1.0/25|ID 128= 192.168.1.128/25|");
-        Assertions.assertEquals(SubnetCalculator.turnIDsIntoDecimal( "11111111111111111111111111100000", "192.168.1.0", "192.168.1"), "ID 0= 192.168.1.0/27|ID 32= 192.168.1.32/27|ID 64= 192.168.1.64/27|" +
+        Assertions.assertEquals(calculator.turnIDsIntoDecimal( "11111111111111111111111100000000", "1.1.1.0", "1.1.1"), "ID 0= 1.1.1.0/24|");
+        Assertions.assertNotEquals(calculator.turnIDsIntoDecimal( "11111111111111111111111100000000", "1.1.1.0", "1.1.1"), "ID 0= 1.1.1.1");
+        Assertions.assertEquals(calculator.turnIDsIntoDecimal( "11111111111111111111111100000000", "192.168.1.0", "192.168.1"), "ID 0= 192.168.1.0/24|");
+        Assertions.assertEquals(calculator.turnIDsIntoDecimal( "11111111111111110000000000000000", "192.168.0.0", "192.168"), "ID 0= 192.168.0.0/16|");
+        Assertions.assertEquals(calculator.turnIDsIntoDecimal( "11111111000000000000000000000000", "192.0.0.0", "192"), "ID 0= 192.0.0.0/8|");
+        Assertions.assertEquals(calculator.turnIDsIntoDecimal( "11111111111111111111111110000000", "192.168.1.0", "192.168.1"), "ID 0= 192.168.1.0/25|ID 128= 192.168.1.128/25|");
+        Assertions.assertEquals(calculator.turnIDsIntoDecimal( "11111111111111111111111111100000", "192.168.1.0", "192.168.1"), "ID 0= 192.168.1.0/27|ID 32= 192.168.1.32/27|ID 64= 192.168.1.64/27|" +
                 "ID 96= 192.168.1.96/27|ID 128= 192.168.1.128/27|ID 160= 192.168.1.160/27|ID 192= 192.168.1.192/27|ID 224= 192.168.1.224/27|");
-        Assertions.assertEquals(SubnetCalculator.turnIDsIntoDecimal( "11111111111111000000000000000000", "192.0.0.0", "192"), "ID 0= 192.0.0.0/14|ID 4= 192.4.0.0/14|ID 8= 192.8.0.0/14|ID 12= 192.12.0.0/14|" +
+        Assertions.assertEquals(calculator.turnIDsIntoDecimal( "11111111111111000000000000000000", "192.0.0.0", "192"), "ID 0= 192.0.0.0/14|ID 4= 192.4.0.0/14|ID 8= 192.8.0.0/14|ID 12= 192.12.0.0/14|" +
                 "ID 16= 192.16.0.0/14|ID 20= 192.20.0.0/14|ID 24= 192.24.0.0/14|ID 28= 192.28.0.0/14|ID 32= 192.32.0.0/14|ID 36= 192.36.0.0/14|ID 40= 192.40.0.0/14|ID 44= 192.44.0.0/14|ID 48= 192.48.0.0/14|ID 52= 192.52.0.0/14|ID 56= 192.56.0.0/14|" +
                 "ID 60= 192.60.0.0/14|ID 64= 192.64.0.0/14|ID 68= 192.68.0.0/14|ID 72= 192.72.0.0/14|ID 76= 192.76.0.0/14|ID 80= 192.80.0.0/14|ID 84= 192.84.0.0/14|ID 88= 192.88.0.0/14|ID 92= 192.92.0.0/14|ID 96= 192.96.0.0/14|ID 100= 192.100.0.0/14|" +
                 "ID 104= 192.104.0.0/14|ID 108= 192.108.0.0/14|ID 112= 192.112.0.0/14|ID 116= 192.116.0.0/14|ID 120= 192.120.0.0/14|ID 124= 192.124.0.0/14|ID 128= 192.128.0.0/14|ID 132= 192.132.0.0/14|ID 136= 192.136.0.0/14|ID 140= 192.140.0.0/14|" +
@@ -87,7 +88,6 @@ public class SubnetCalculatorTest {
                 "ID 184= 192.184.0.0/14|ID 188= 192.188.0.0/14|ID 192= 192.192.0.0/14|ID 196= 192.196.0.0/14|ID 200= 192.200.0.0/14|ID 204= 192.204.0.0/14|ID 208= 192.208.0.0/14|ID 212= 192.212.0.0/14|ID 216= 192.216.0.0/14|ID 220= 192.220.0.0/14|" +
                 "ID 224= 192.224.0.0/14|ID 228= 192.228.0.0/14|ID 232= 192.232.0.0/14|ID 236= 192.236.0.0/14|ID 240= 192.240.0.0/14|ID 244= 192.244.0.0/14|ID 248= 192.248.0.0/14|ID 252= 192.252.0.0/14|");
     }
-
 
     @Test
     void testcheckDots() {
@@ -106,23 +106,23 @@ public class SubnetCalculatorTest {
 
     @Test
     void testSplitIp() {
-        Assertions.assertFalse(validator.splitIP("..1.1"));
-        Assertions.assertFalse(validator.splitIP("a.1.a.1"));
-        Assertions.assertFalse(validator.splitIP("0.1.1.1"));
-        Assertions.assertTrue (validator.splitIP("1.1.1.1"));
-        Assertions.assertTrue (validator.splitIP("255.255.255.255"));
-        Assertions.assertFalse(validator.splitIP("256.256.256.256"));
-        Assertions.assertTrue(validator.splitIP("1.0.0.0"));
+        Assertions.assertFalse(validator.validateIP("..1.1"));
+        Assertions.assertFalse(validator.validateIP("a.1.a.1"));
+        Assertions.assertFalse(validator.validateIP("0.1.1.1"));
+        Assertions.assertTrue (validator.validateIP("1.1.1.1"));
+        Assertions.assertTrue (validator.validateIP("255.255.255.255"));
+        Assertions.assertFalse(validator.validateIP("256.256.256.256"));
+        Assertions.assertTrue(validator.validateIP("1.0.0.0"));
     }
 
     @Test
     void testSplitSNM() {
-        Assertions.assertFalse(validator.splitSNM("..1.1"));
-        Assertions.assertFalse(validator.splitSNM("a.1.a.1"));
-        Assertions.assertFalse(validator.splitSNM("254.1.1.1"));
-        Assertions.assertTrue(validator.splitSNM("255.0.0.0"));
-        Assertions.assertTrue(validator.splitSNM("255.255.255.252"));
-        Assertions.assertFalse(validator.splitSNM("255.255.255.254"));
+        Assertions.assertFalse(validator.splitAndValidateSNM("..1.1"));
+        Assertions.assertFalse(validator.splitAndValidateSNM("a.1.a.1"));
+        Assertions.assertFalse(validator.splitAndValidateSNM("254.1.1.1"));
+        Assertions.assertTrue(validator.splitAndValidateSNM("255.0.0.0"));
+        Assertions.assertTrue(validator.splitAndValidateSNM("255.255.255.252"));
+        Assertions.assertFalse(validator.splitAndValidateSNM("255.255.255.254"));
     }
 
     @Test

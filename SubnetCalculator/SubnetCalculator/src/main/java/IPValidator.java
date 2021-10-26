@@ -16,7 +16,7 @@ public class IPValidator {
         return valuelength >= 7 && valuelength <= 15;
     }
 
-    public boolean splitIP(String ip) {
+    public boolean validateIP(String ip) {
         List<String> sequentList = Arrays.asList(ip.split("\\."));
         for (int i = 0; i < 4; i++) {
             if (sequentList.get(i).isEmpty()) {
@@ -41,7 +41,7 @@ public class IPValidator {
         return true;
     }
 
-    public boolean splitSNM(String snm) {
+    public boolean splitAndValidateSNM(String snm) {
         List<Integer> snmSequenzList = new ArrayList<>();
         List<String> sequentList = Arrays.asList(snm.split("\\."));
         for (int i = 0; i < 4; i++) {

@@ -1,9 +1,7 @@
 import org.apache.commons.lang3.StringUtils;
-
 import java.util.*;
 
 public class SubnetCalculator{
-    static List<Integer> ipSequenzList = new ArrayList<>();
 
     public static void main(String[] args) {
         System.out.println("Willkommen beim Netzwerkrechner!");
@@ -26,7 +24,7 @@ public class SubnetCalculator{
             System.out.println("Bitte gib eine IP im Format: 1.1.1.1 ein!");
             Scanner scan = new Scanner(System.in);
             userInput = scan.nextLine();
-        } while (!checkDots(userInput) || !isLenghtRight(userInput) || !splitIP(userInput));
+        } while (!IPValidator.checkDots(userInput) || !IPValidator.isLenghtRight(userInput) || !IPValidator.splitIP(userInput));
         return stringtoBinaryString(userInput);
     }
 
@@ -36,7 +34,7 @@ public class SubnetCalculator{
             System.out.println("Bitte gib eine Subnetzmaske ein!");
             Scanner scan = new Scanner(System.in);
             userInput = scan.nextLine();
-        } while (!checkDots(userInput) || !isLenghtRight(userInput) || !splitSNM(userInput));
+        } while (!IPValidator.checkDots(userInput) || !IPValidator.isLenghtRight(userInput) || !IPValidator.splitSNM(userInput));
         return stringtoBinaryString(userInput);
     }
 
@@ -48,100 +46,6 @@ public class SubnetCalculator{
             binaryStringResult.insert(0, "0".repeat(Math.max(0, 8 - binaryString.length())) + binaryString);
         }
         return binaryStringResult.toString();
-    }
-
-    public static boolean checkDots(String value) {
-        int count = StringUtils.countMatches(value, ".");
-        return count == 3;
-    }
-
-    public static boolean isLenghtRight(String value) {
-        int valuelength = value.length();
-        return valuelength >= 7 && valuelength <= 15;
-    }
-
-    public static boolean splitIP(String ip) {
-        List<String> sequentList = Arrays.asList(ip.split("\\."));
-        for (int i = 0; i < 4; i++) {
-            if (sequentList.get(i).isEmpty()) {
-                System.out.println("Zuwenig Sequenz Inhalt!");
-                return false;
-            }
-            if (sequentList.get(0).equals("0")) {
-                System.out.println("Erste Sequenz darf nicht 0 sein!");
-                return false;
-            }
-            if (!StringUtils.isNumeric(sequentList.get(i))) {
-                System.out.println("Ungültige Eingabe! Gib bitte eine gültige IP ein!");
-                return false;
-            } else {
-                int sequence = Integer.parseInt(sequentList.get(i));
-                if (sequence < 256) {
-                    ipSequenzList.add(sequence);
-                } else {
-                    System.out.println("Zahl zu groß!");
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public static boolean splitSNM(String snm) {
-        List<Integer> snmSequenzList = new ArrayList<>();
-        List<String> sequentList = Arrays.asList(snm.split("\\."));
-        for (int i = 0; i < 4; i++) {
-            if (sequentList.get(i).isEmpty()) {
-                System.out.println("Zuwenig Sequent Inhalt!");
-                return false;
-            }
-            if (!sequentList.get(0).equals("255")) {
-                System.out.println("Erste Sequenz muss 255 sein!");
-                return false;
-            }
-            if (!StringUtils.isNumeric(sequentList.get(i))) {
-                System.out.println("Ungültige Eingabe! Gib bitte eine gültige IP ein!");
-                return false;
-            } else {
-                snmSequenzList.add(Integer.parseInt(sequentList.get(i)));
-            }
-        }
-        return snmValidation(snmSequenzList);
-    }
-
-    public static boolean snmValidation(List<Integer> snmSequenzList) {
-        for (int i = 0; i < 4; i++) {
-            if (snmSequenzList.get(i) > 255  || snmSequenzList.get(i) < 128 && snmSequenzList.get(i) >0 ) {
-                System.out.println("Bitte geben Sie Zahlen zwischen 128 und 255 oder 0 an!");
-                return false;
-            }
-            if (snmSequenzList.get(3) >252) {
-                System.out.println("Diese Subnetzmaske lässt Sie kein kommunikatives Netzwerk aufbauen");
-                return false;
-            }
-        }
-        StringBuilder binarySNM = new StringBuilder();
-        for (int i = 0; i < 4; i++) {
-            binarySNM.append(Integer.toBinaryString(snmSequenzList.get(i)));
-        }
-        boolean isZeroFound = false;
-        boolean isAfterZeroAOne = false;
-        for (int i = 0; i < binarySNM.length(); i++) {
-            char charr = binarySNM.charAt(i);
-            if (charr == '0') {
-                isZeroFound = true;
-            }
-            if (isZeroFound) {
-                if (charr == '1') {
-                    isAfterZeroAOne = true;
-                }
-            }
-        }
-        if (isZeroFound && isAfterZeroAOne) {
-            System.out.println("Eingabe ungültig! Für die SNM sind lediglich die Zahlen 0, 128, 192, 224, 240, 248, 252, 254, 255 erlaubt!");
-            return false;
-        }
-        return true;
     }
 
     public static String turnIntoDecimalBC(String snmBinary, String decimalAddress, String decimalAddressTwo) {

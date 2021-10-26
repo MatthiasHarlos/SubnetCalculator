@@ -89,55 +89,55 @@ public class SubnetCalculatorTest {
 
     @Test
     void testcheckDots() {
-        Assertions.assertFalse(SubnetCalculator.checkDots(".."));
-        Assertions.assertFalse(SubnetCalculator.checkDots("...."));
-        Assertions.assertTrue(SubnetCalculator.checkDots("..."));
+        Assertions.assertFalse(IPValidator.checkDots(".."));
+        Assertions.assertFalse(IPValidator.checkDots("...."));
+        Assertions.assertTrue(IPValidator.checkDots("..."));
     }
 
     @Test
     void testIpLength() {
-        Assertions.assertFalse(SubnetCalculator.isLenghtRight("1.1.1"));
-        Assertions.assertFalse(SubnetCalculator.isLenghtRight("111111.1.1.111111"));
-        Assertions.assertTrue(SubnetCalculator.isLenghtRight("1.1.1.1"));
-        Assertions.assertTrue(SubnetCalculator.isLenghtRight("111.111.111.111"));
+        Assertions.assertFalse(IPValidator.isLenghtRight("1.1.1"));
+        Assertions.assertFalse(IPValidator.isLenghtRight("111111.1.1.111111"));
+        Assertions.assertTrue(IPValidator.isLenghtRight("1.1.1.1"));
+        Assertions.assertTrue(IPValidator.isLenghtRight("111.111.111.111"));
     }
 
     @Test
     void testSplitIp() {
-        Assertions.assertFalse(SubnetCalculator.splitIP("..1.1"));
-        Assertions.assertFalse(SubnetCalculator.splitIP("a.1.a.1"));
-        Assertions.assertFalse(SubnetCalculator.splitIP("0.1.1.1"));
-        Assertions.assertTrue (SubnetCalculator.splitIP("1.1.1.1"));
-        Assertions.assertTrue (SubnetCalculator.splitIP("255.255.255.255"));
-        Assertions.assertFalse(SubnetCalculator.splitIP("256.256.256.256"));
-        Assertions.assertTrue(SubnetCalculator.splitIP("1.0.0.0"));
+        Assertions.assertFalse(IPValidator.splitIP("..1.1"));
+        Assertions.assertFalse(IPValidator.splitIP("a.1.a.1"));
+        Assertions.assertFalse(IPValidator.splitIP("0.1.1.1"));
+        Assertions.assertTrue (IPValidator.splitIP("1.1.1.1"));
+        Assertions.assertTrue (IPValidator.splitIP("255.255.255.255"));
+        Assertions.assertFalse(IPValidator.splitIP("256.256.256.256"));
+        Assertions.assertTrue(IPValidator.splitIP("1.0.0.0"));
     }
 
     @Test
     void testSplitSNM() {
-        Assertions.assertFalse(SubnetCalculator.splitSNM("..1.1"));
-        Assertions.assertFalse(SubnetCalculator.splitSNM("a.1.a.1"));
-        Assertions.assertFalse(SubnetCalculator.splitSNM("254.1.1.1"));
-        Assertions.assertTrue(SubnetCalculator.splitSNM("255.0.0.0"));
-        Assertions.assertTrue(SubnetCalculator.splitSNM("255.255.255.252"));
-        Assertions.assertFalse(SubnetCalculator.splitSNM("255.255.255.254"));
+        Assertions.assertFalse(IPValidator.splitSNM("..1.1"));
+        Assertions.assertFalse(IPValidator.splitSNM("a.1.a.1"));
+        Assertions.assertFalse(IPValidator.splitSNM("254.1.1.1"));
+        Assertions.assertTrue(IPValidator.splitSNM("255.0.0.0"));
+        Assertions.assertTrue(IPValidator.splitSNM("255.255.255.252"));
+        Assertions.assertFalse(IPValidator.splitSNM("255.255.255.254"));
     }
 
     @Test
     void testsnmValidation (){
         List<Integer> testList = List.of(256, 256, 256, 256);
-        Assertions.assertFalse(SubnetCalculator.snmValidation(testList));
+        Assertions.assertFalse(IPValidator.snmValidation(testList));
         testList = List.of(255, 0, 255, 0);
-        Assertions.assertFalse(SubnetCalculator.snmValidation(testList));
+        Assertions.assertFalse(IPValidator.snmValidation(testList));
         testList = List.of(255, 255, 255, 254);
-        Assertions.assertFalse(SubnetCalculator.snmValidation(testList));
+        Assertions.assertFalse(IPValidator.snmValidation(testList));
         testList = List.of(255, 255, 255, 252);
-        Assertions.assertTrue(SubnetCalculator.snmValidation(testList));
+        Assertions.assertTrue(IPValidator.snmValidation(testList));
         testList = List.of(255, 255, 255, 1);
-        Assertions.assertFalse(SubnetCalculator.snmValidation(testList));
+        Assertions.assertFalse(IPValidator.snmValidation(testList));
         testList = List.of(255, 255, 255, 127);
-        Assertions.assertFalse(SubnetCalculator.snmValidation(testList));
+        Assertions.assertFalse(IPValidator.snmValidation(testList));
         testList = List.of(255, 0, 0, 0);
-        Assertions.assertTrue(SubnetCalculator.snmValidation(testList));
+        Assertions.assertTrue(IPValidator.snmValidation(testList));
     }
 }

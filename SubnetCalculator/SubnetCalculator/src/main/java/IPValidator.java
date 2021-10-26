@@ -6,17 +6,17 @@ import java.util.List;
 
 public class IPValidator {
 
-    public static boolean checkDots(String value) {
+    public boolean checkDots(String value) {
         int count = StringUtils.countMatches(value, ".");
         return count == 3;
     }
 
-    public static boolean isLenghtRight(String value) {
+    public boolean isLenghtRight(String value) {
         int valuelength = value.length();
         return valuelength >= 7 && valuelength <= 15;
     }
 
-    public static boolean splitIP(String ip) {
+    public boolean splitIP(String ip) {
         List<String> sequentList = Arrays.asList(ip.split("\\."));
         for (int i = 0; i < 4; i++) {
             if (sequentList.get(i).isEmpty()) {
@@ -41,7 +41,7 @@ public class IPValidator {
         return true;
     }
 
-    public static boolean splitSNM(String snm) {
+    public boolean splitSNM(String snm) {
         List<Integer> snmSequenzList = new ArrayList<>();
         List<String> sequentList = Arrays.asList(snm.split("\\."));
         for (int i = 0; i < 4; i++) {
@@ -63,7 +63,7 @@ public class IPValidator {
         return snmValidation(snmSequenzList);
     }
 
-    public static boolean snmValidation(List<Integer> snmSequenzList) {
+    public boolean snmValidation(List<Integer> snmSequenzList) {
         for (int i = 0; i < 4; i++) {
             if (snmSequenzList.get(i) > 255  || snmSequenzList.get(i) < 128 && snmSequenzList.get(i) >0 ) {
                 System.out.println("Bitte geben Sie Zahlen zwischen 128 und 255 oder 0 an!");

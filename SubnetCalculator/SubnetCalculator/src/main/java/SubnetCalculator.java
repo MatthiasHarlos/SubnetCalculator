@@ -3,6 +3,8 @@ import java.util.*;
 
 public class SubnetCalculator{
 
+    public static IPValidator validator = new IPValidator();
+
     public static void main(String[] args) {
         System.out.println("Willkommen beim Netzwerkrechner!");
         String ipBinary = checkUserIPInput();
@@ -24,7 +26,7 @@ public class SubnetCalculator{
             System.out.println("Bitte gib eine IP im Format: 1.1.1.1 ein!");
             Scanner scan = new Scanner(System.in);
             userInput = scan.nextLine();
-        } while (!IPValidator.checkDots(userInput) || !IPValidator.isLenghtRight(userInput) || !IPValidator.splitIP(userInput));
+        } while (!validator.checkDots(userInput) || !validator.isLenghtRight(userInput) || !validator.splitIP(userInput));
         return stringtoBinaryString(userInput);
     }
 
@@ -34,7 +36,7 @@ public class SubnetCalculator{
             System.out.println("Bitte gib eine Subnetzmaske ein!");
             Scanner scan = new Scanner(System.in);
             userInput = scan.nextLine();
-        } while (!IPValidator.checkDots(userInput) || !IPValidator.isLenghtRight(userInput) || !IPValidator.splitSNM(userInput));
+        } while (!validator.checkDots(userInput) || !validator.isLenghtRight(userInput) || !validator.splitSNM(userInput));
         return stringtoBinaryString(userInput);
     }
 

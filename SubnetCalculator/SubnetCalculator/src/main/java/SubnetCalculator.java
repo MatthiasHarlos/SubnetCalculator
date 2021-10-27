@@ -20,23 +20,23 @@ public class SubnetCalculator{
         resultOutputForUser(iDs, bCs, iPs, hosts);
     }
 
-    private static String checkUserIPInput(Validator validator) {
+    private static String checkUserIPInput(Validator validate) {
         String userInput;
         do {
             System.out.println("Bitte gib eine IP im Format: 1.1.1.1 ein!");
             Scanner scan = new Scanner(System.in);
             userInput = scan.nextLine();
-        } while (!validator.checkDots(userInput) || !validator.isLenghtRight(userInput) || !validator.iP(userInput));
+        } while (!validate.checkDots(userInput) || !validate.isLenghtRight(userInput) || !validate.iP(userInput));
         return stringtoBinaryString(userInput);
     }
 
-    private static String checkUserSNMInput(Validator validator) {
+    private static String checkUserSNMInput(Validator validate) {
         String userInput;
         do {
             System.out.println("Bitte gib eine Subnetzmaske ein!");
             Scanner scan = new Scanner(System.in);
             userInput = scan.nextLine();
-        } while (!validator.checkDots(userInput) || !validator.isLenghtRight(userInput) || !validator.sNM(userInput));
+        } while (!validate.checkDots(userInput) || !validate.isLenghtRight(userInput) || !validate.sNM(userInput));
         return stringtoBinaryString(userInput);
     }
 

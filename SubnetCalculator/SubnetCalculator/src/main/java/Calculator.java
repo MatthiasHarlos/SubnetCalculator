@@ -131,5 +131,4 @@ public class Calculator {
     public int hosts(String snmBinary) {
         return (int) (Math.pow(2, StringUtils.countMatches(snmBinary, "0"))-2);
     }
-
 }

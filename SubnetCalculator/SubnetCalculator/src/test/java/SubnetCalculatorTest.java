@@ -6,7 +6,7 @@ import java.util.List;
 
 public class SubnetCalculatorTest {
 
-    IPValidator validator = new IPValidator();
+    Validator validator = new Validator();
     Calculator calculator = new Calculator();
 
     @Test
@@ -106,23 +106,23 @@ public class SubnetCalculatorTest {
 
     @Test
     void testSplitIp() {
-        Assertions.assertFalse(validator.validateIP("..1.1"));
-        Assertions.assertFalse(validator.validateIP("a.1.a.1"));
-        Assertions.assertFalse(validator.validateIP("0.1.1.1"));
-        Assertions.assertTrue (validator.validateIP("1.1.1.1"));
-        Assertions.assertTrue (validator.validateIP("255.255.255.255"));
-        Assertions.assertFalse(validator.validateIP("256.256.256.256"));
-        Assertions.assertTrue(validator.validateIP("1.0.0.0"));
+        Assertions.assertFalse(validator.iP("..1.1"));
+        Assertions.assertFalse(validator.iP("a.1.a.1"));
+        Assertions.assertFalse(validator.iP("0.1.1.1"));
+        Assertions.assertTrue (validator.iP("1.1.1.1"));
+        Assertions.assertTrue (validator.iP("255.255.255.255"));
+        Assertions.assertFalse(validator.iP("256.256.256.256"));
+        Assertions.assertTrue(validator.iP("1.0.0.0"));
     }
 
     @Test
     void testSplitSNM() {
-        Assertions.assertFalse(validator.splitAndValidateSNM("..1.1"));
-        Assertions.assertFalse(validator.splitAndValidateSNM("a.1.a.1"));
-        Assertions.assertFalse(validator.splitAndValidateSNM("254.1.1.1"));
-        Assertions.assertTrue(validator.splitAndValidateSNM("255.0.0.0"));
-        Assertions.assertTrue(validator.splitAndValidateSNM("255.255.255.252"));
-        Assertions.assertFalse(validator.splitAndValidateSNM("255.255.255.254"));
+        Assertions.assertFalse(validator.sNM("..1.1"));
+        Assertions.assertFalse(validator.sNM("a.1.a.1"));
+        Assertions.assertFalse(validator.sNM("254.1.1.1"));
+        Assertions.assertTrue(validator.sNM("255.0.0.0"));
+        Assertions.assertTrue(validator.sNM("255.255.255.252"));
+        Assertions.assertFalse(validator.sNM("255.255.255.254"));
     }
 
     @Test

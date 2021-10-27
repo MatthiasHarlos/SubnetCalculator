@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class IPValidator {
+public class Validator {
 
     public boolean checkDots(String value) {
         int count = StringUtils.countMatches(value, ".");
@@ -16,7 +16,7 @@ public class IPValidator {
         return valuelength >= 7 && valuelength <= 15;
     }
 
-    public boolean validateIP(String ip) {
+    public boolean iP(String ip) {
         List<String> sequentList = Arrays.asList(ip.split("\\."));
         for (int i = 0; i < 4; i++) {
             if (sequentList.get(i).isEmpty()) {
@@ -41,7 +41,7 @@ public class IPValidator {
         return true;
     }
 
-    public boolean splitAndValidateSNM(String snm) {
+    public boolean sNM(String snm) {
         List<Integer> snmSequenzList = new ArrayList<>();
         List<String> sequentList = Arrays.asList(snm.split("\\."));
         for (int i = 0; i < 4; i++) {

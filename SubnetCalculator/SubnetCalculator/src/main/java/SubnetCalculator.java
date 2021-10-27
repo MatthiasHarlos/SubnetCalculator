@@ -2,13 +2,12 @@ import java.util.*;
 
 public class SubnetCalculator{
 
-    public static IPValidator validator = new IPValidator();
-
     public static void main(String[] args) {
         Calculator calculate = new Calculator();
+        Validator validate = new Validator();
         System.out.println("Willkommen beim Netzwerkrechner!");
-        String ipBinary = checkUserIPInput();
-        String snmBinary = checkUserSNMInput();
+        String ipBinary = checkUserIPInput(validate);
+        String snmBinary = checkUserSNMInput(validate);
         int logicalAnd = (snmBinary.lastIndexOf("1")+1);
         String iDBinary = ipBinary.substring(0, logicalAnd);
         String[] decimalAdr = calculate.decimal(iDBinary).split("/");
@@ -21,23 +20,23 @@ public class SubnetCalculator{
         resultOutputForUser(iDs, bCs, iPs, hosts);
     }
 
-    private static String checkUserIPInput() {
+    private static String checkUserIPInput(Validator validator) {
         String userInput;
         do {
             System.out.println("Bitte gib eine IP im Format: 1.1.1.1 ein!");
             Scanner scan = new Scanner(System.in);
             userInput = scan.nextLine();
-        } while (!validator.checkDots(userInput) || !validator.isLenghtRight(userInput) || !validator.validateIP(userInput));
+        } while (!validator.checkDots(userInput) || !validator.isLenghtRight(userInput) || !validator.iP(userInput));
         return stringtoBinaryString(userInput);
     }
 
-    private static String checkUserSNMInput() {
+    private static String checkUserSNMInput(Validator validator) {
         String userInput;
         do {
             System.out.println("Bitte gib eine Subnetzmaske ein!");
             Scanner scan = new Scanner(System.in);
             userInput = scan.nextLine();
-        } while (!validator.checkDots(userInput) || !validator.isLenghtRight(userInput) || !validator.splitAndValidateSNM(userInput));
+        } while (!validator.checkDots(userInput) || !validator.isLenghtRight(userInput) || !validator.sNM(userInput));
         return stringtoBinaryString(userInput);
     }
 

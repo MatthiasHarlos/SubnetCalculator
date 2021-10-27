@@ -106,7 +106,7 @@ public class Calculator {
         return decimalAdress + "/" +decimalAdressTwo;
     }
 
-    public List<List<String>> calculateIPs(String iDs, String bCs) {
+    public List<List<String>> iPs(String iDs, String bCs) {
         List<String> iDList = Arrays.asList(iDs.split("\\|"));
         List<String> bcList = Arrays.asList(bCs.split("\\|"));
         List<List<String>> resultLists = new ArrayList<>();
@@ -128,7 +128,7 @@ public class Calculator {
         return resultLists;
     }
 
-    public int calculateHosts(String snmBinary) {
+    public int hosts(String snmBinary) {
         return (int) (Math.pow(2, StringUtils.countMatches(snmBinary, "0"))-2);
     }
 

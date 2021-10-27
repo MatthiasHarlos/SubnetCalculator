@@ -1,12 +1,11 @@
-import org.apache.commons.lang3.StringUtils;
 import java.util.*;
 
 public class SubnetCalculator{
 
     public static IPValidator validator = new IPValidator();
-    public static Calculator calculate = new Calculator();
 
     public static void main(String[] args) {
+        Calculator calculate = new Calculator();
         System.out.println("Willkommen beim Netzwerkrechner!");
         String ipBinary = checkUserIPInput();
         String snmBinary = checkUserSNMInput();
@@ -17,9 +16,9 @@ public class SubnetCalculator{
         String decimalAdressTwo = decimalAdr[1];
         String iDs = calculate.turnIDsIntoDecimal(snmBinary, decimalAdress, decimalAdressTwo);
         String bCs = calculate.turnIntoDecimalBC(snmBinary, decimalAdress, decimalAdressTwo);
-        List<List<String>> iPs = calculate.calculateIPs(iDs, bCs);
-        int hosts = calculate.calculateHosts(snmBinary);
-        resultOutputofIDsBCsIPs(iDs, bCs, iPs, hosts);
+        List<List<String>> iPs = calculate.iPs(iDs, bCs);
+        int hosts = calculate.hosts(snmBinary);
+        resultOutputForUser(iDs, bCs, iPs, hosts);
     }
 
     private static String checkUserIPInput() {
@@ -52,7 +51,7 @@ public class SubnetCalculator{
         return binaryStringResult.toString();
     }
 
-    public static void resultOutputofIDsBCsIPs(String iDs, String bCs, List<List<String>> iPs, int hosts) {
+    public static void resultOutputForUser(String iDs, String bCs, List<List<String>> iPs, int hosts) {
         List<String> iDList = Arrays.asList(iDs.split("\\|"));
         List<String> bcList = Arrays.asList(bCs.split("\\|"));
         List<List<String>> resultLists = new ArrayList<>();

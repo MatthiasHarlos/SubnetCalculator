@@ -10,6 +10,13 @@ public class SubnetCalculatorTest {
     Calculator calculate = new Calculator();
 
     @Test
+    void testCalculateHosts() {
+        Assertions.assertEquals(calculate.hosts("11111111111111111111111100000000"), 254);
+        Assertions.assertEquals(calculate.hosts("11111111111111111111111111111100"), 2);
+        Assertions.assertEquals(calculate.hosts("11111111000000000000000000000000"), 16777214);
+    }
+
+    @Test
     void testCalculateIPs() {
         List<List<String>> resultLists = new ArrayList<>();
         for (int i = 0; i<256; i=i+4) {

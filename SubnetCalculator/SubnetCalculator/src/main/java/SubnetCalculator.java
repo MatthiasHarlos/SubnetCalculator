@@ -5,7 +5,7 @@ public class SubnetCalculator{
     public static void main(String[] args) {
         Calculator calculate = new Calculator();
         Validator validate = new Validator();
-        System.out.println("Willkommen beim Netzwerkrechner! ");
+        System.out.println("Willkommen beim Netzwerkrechner!");
         String ipBinary = checkUserIPInput(validate);
         String snmBinary = checkUserSNMInput(validate);
         int logicalAnd = (snmBinary.lastIndexOf("1")+1);

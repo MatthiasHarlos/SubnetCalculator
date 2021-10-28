@@ -14,14 +14,13 @@ public class Networks {
         calculateIPs(snm);
         setHost(hosts);
         calculateAllNets();
-
     }
 
     public void calculateAllNets() {
         List<List<String>> resultLists = new ArrayList<>();
         for (int i = 0; i < iDs.size(); i++) {
             List<String> result = new ArrayList<>();
-            result.add("ID= " + iDs.get(i));
+            result.add("Netz ID= " + iDs.get(i));
             result.add("Braodcast= " + bcs.get(i));
             result.add(ips.get(i).get(0));
             result.add(ips.get(i).get(1));

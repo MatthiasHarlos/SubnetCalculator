@@ -14,14 +14,14 @@ public class SubnetCalculator{
         IPAddress broadcast = calculateBroadcastIp(netID, snm);
         int hosts = snm.getHosts();
         Networks networks = new Networks(netID, snm, broadcast, hosts);
-        resultOutputForUser(netID, broadcast, hosts, networks, snm);
+        resultOutputForUser(networks, snm);
     }
 
-    private static void resultOutputForUser(IPAddress netID, IPAddress broadcast, int hosts, Networks networks, Subnetmask snm) {
-        System.out.println("Netz ID= " + netID);
+    private static void resultOutputForUser(Networks networks, Subnetmask snm) {
+        /*System.out.println("Netz ID= " + netID);
         System.out.println("Broadcast= " + broadcast);
-        System.out.println("Mögliche Hosts= " + hosts + "\n");
-        System.out.println("Alle möglichen Netze mit der Subnetzmaske " + snm);
+        System.out.println("Mögliche Hosts= " + hosts + "\n"); */
+        System.out.println("Alle möglichen Netze mit der Subnetzmaske " + snm  + " sind:\n");
         for (List<String> allNetworks : networks.getNetworks()) {
             System.out.println(allNetworks);
         }

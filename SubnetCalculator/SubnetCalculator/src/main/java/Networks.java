@@ -11,9 +11,9 @@ public class Networks {
     public Networks(IPAddress iD, Subnetmask snm, IPAddress broadcast, int hosts) {
         calculateIDs(iD, snm);
         calculateBCs(broadcast, iD, snm);
-            calculateIPs(snm);
-            setHost(hosts);
-            calculateAllNets();
+        calculateIPs(snm);
+        setHost(hosts);
+        calculateAllNets();
 
     }
 
@@ -22,7 +22,7 @@ public class Networks {
         for (int i = 0; i < iDs.size(); i++) {
             List<String> result = new ArrayList<>();
             result.add("ID= " + iDs.get(i));
-                result.add("Braodcast= " + bcs.get(i));
+            result.add("Braodcast= " + bcs.get(i));
             result.add(ips.get(i).get(0));
             result.add(ips.get(i).get(1));
             result.add("Mögliche Hosts= " + getHost());
@@ -46,11 +46,11 @@ public class Networks {
                 iPs[i] = "Erste IP = " + iDs.get(i).substring(0, iDs.get(i).lastIndexOf(".")+1)+"1";
                 result.add(iPs[i]);
             }
-                int lastIPs = Integer.parseInt(bcs.get(i).substring(bcs.get(i).lastIndexOf(".") + 1)) - 1;
-                iPslast[i] = "Letzte IP = " + bcs.get(i).substring(0, bcs.get(i).lastIndexOf(".") + 1) + lastIPs;
-                result.add(iPslast[i]);
-                resultList.add(result);
-                setIps(resultList);
+            int lastIPs = Integer.parseInt(bcs.get(i).substring(bcs.get(i).lastIndexOf(".") + 1)) - 1;
+            iPslast[i] = "Letzte IP = " + bcs.get(i).substring(0, bcs.get(i).lastIndexOf(".") + 1) + lastIPs;
+            result.add(iPslast[i]);
+            resultList.add(result);
+            setIps(resultList);
         }
     }
 

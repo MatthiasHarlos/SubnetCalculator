@@ -3,54 +3,71 @@ import java.util.*;
 public class SubnetCalculator{
 
     public static void main(String[] args) {
-        Calculator calculate = new Calculator();
-        Validator validate = new Validator();
         System.out.println("Willkommen beim Netzwerkrechner!");
-        String ipBinary = checkUserIPInput(validate);
-        String snmBinary = checkUserSNMInput(validate);
-        int logicalAnd = (snmBinary.lastIndexOf("1")+1);
-        String iDBinary = ipBinary.substring(0, logicalAnd);
-        String[] decimalAdr = calculate.decimal(iDBinary).split("/");
-        String decimalAdress = decimalAdr[0];
-        String decimalAdressTwo = decimalAdr[1];
-        String iDs = calculate.turnIDsIntoDecimal(snmBinary, decimalAdress, decimalAdressTwo);
-        String bCs = calculate.turnIntoDecimalBC(snmBinary, decimalAdress, decimalAdressTwo);
-        List<List<String>> iPs = calculate.iPs(iDs, bCs);
-        int hosts = calculate.hosts(snmBinary);
-        resultOutputForUser(iDs, bCs, iPs, hosts);
+        IPAddress ip = checkUserIPInput();
+        Subnetmask snm = checkUserSNMInput();
+
+        System.out.println("Eingegebene IP: " + ip.toString());
+        System.out.println("Eingegebene SNM: " + snm.toString());
+        System.out.println("");
+        System.out.println("IP (bin) : " + ip.toBinaryString());
+        System.out.println("SNM (bin): " + snm.toBinaryString());
+        System.out.println("");
+        IPAddress netID = calculateNetID(ip, snm);
+        IPAddress broadcast = calculateBroadcastIp(netID, snm);
+        int hosts = snm.getHosts();
+        //Network network = new Network(netID, snm);
+        resultOutputForUser(netID, broadcast, hosts);
     }
 
-    private static String checkUserIPInput(Validator validate) {
-        String userInput;
-        do {
-            System.out.println("Bitte gib eine IP im Format: 1.1.1.1 ein!");
+    private static void resultOutputForUser(IPAddress netID, IPAddress broadcast, int hosts) {
+        System.out.println("Netz ID= " + netID);
+        System.out.println("Broadcast= " + broadcast);
+        System.out.println("Mögliche Hosts= " + hosts);
+    }
+
+    public static IPAddress calculateBroadcastIp(IPAddress netId, Subnetmask subnetmask) {
+        Objects.requireNonNull(netId);
+        Objects.requireNonNull(subnetmask);
+        IPAddress invertedSnm = subnetmask.invert();
+        int first = netId.getFirst() + invertedSnm.getFirst();
+        int second = netId.getSecond() + invertedSnm.getSecond();
+        int third = netId.getThird() + invertedSnm.getThird();
+        int fourth = netId.getFourth() + invertedSnm.getFourth();
+        return new IPAddress(first, second, third, fourth);
+    }
+
+    private static IPAddress calculateNetID(IPAddress ip, Subnetmask snm) {
+        Objects.requireNonNull(ip);
+        Objects.requireNonNull(snm);
+        return ip.logicalAnd(snm);
+    }
+
+    private static IPAddress checkUserIPInput() {
+        System.out.println("Bitte gib eine IP im Format: 1.1.1.1 ein!");
             Scanner scan = new Scanner(System.in);
-            userInput = scan.nextLine();
-        } while (!validate.checkDots(userInput) || !validate.isLenghtRight(userInput) || !validate.iP(userInput));
-        return stringtoBinaryString(userInput);
-    }
-
-    private static String checkUserSNMInput(Validator validate) {
-        String userInput;
-        do {
-            System.out.println("Bitte gib eine Subnetzmaske ein!");
-            Scanner scan = new Scanner(System.in);
-            userInput = scan.nextLine();
-        } while (!validate.checkDots(userInput) || !validate.isLenghtRight(userInput) || !validate.sNM(userInput));
-        return stringtoBinaryString(userInput);
-    }
-
-    public static String stringtoBinaryString(String userInput) {
-        List<String> stringList = Arrays.asList(userInput.split("\\."));
-        StringBuilder binaryStringResult = new StringBuilder();
-        for (int i = 3; i >= 0; i--) {
-            String binaryString = Integer.toBinaryString(Integer.parseInt(stringList.get(i)));
-            binaryStringResult.insert(0, "0".repeat(Math.max(0, 8 - binaryString.length())) + binaryString);
+            String userInput = scan.nextLine();
+        try {
+            return new IPAddress(userInput);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ungültige Eingabe, bitte wiederholen!");
+            return checkUserIPInput();
         }
-        return binaryStringResult.toString();
     }
 
-    public static void resultOutputForUser(String iDs, String bCs, List<List<String>> iPs, int hosts) {
+    private static Subnetmask checkUserSNMInput() {
+     System.out.println("Bitte gib eine Subnetzmaske ein!");
+        Scanner scan = new Scanner(System.in);
+        String userInput = scan.nextLine();
+        try {
+            return new Subnetmask(userInput);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ungültige Eingabe, bitte wiederholen!");
+            return checkUserSNMInput();
+        }
+    }
+
+  /*  public static void resultOutputForUser(String iDs, String bCs, List<List<String>> iPs, int hosts) {
         List<String> iDList = Arrays.asList(iDs.split("\\|"));
         List<String> bcList = Arrays.asList(bCs.split("\\|"));
         List<List<String>> resultLists = new ArrayList<>();
@@ -66,5 +83,5 @@ public class SubnetCalculator{
         for (List<String> resultList : resultLists) {
             System.out.println(resultList);
         }
-    }
+    }*/
 }

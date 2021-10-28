@@ -1,25 +1,26 @@
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.InputMismatchException;
-import java.util.List;
+import java.util.*;
 
-public class IPAddress extends NetworkAddress{
+public class IPAddress{
     private int first;
     private int second;
     private int third;
     private int fourth;
 
     public IPAddress(String input) {
-        super(input);
-        if (!iP(input)) {
-            throw new InputMismatchException("no valid IP");
+        if (!checkDots(input)) {
+            throw new IllegalArgumentException("no valid IP");
         }
-        List<String> componentsString = Arrays.asList(input.split("\\."));
+        List<String> parts = Arrays.asList(input.split("\\."));
+
+        if (parts.size() != 4) {
+            throw new IllegalArgumentException();
+        }
+
         List<Integer> componentsInt = new ArrayList<>();
-        for (String component : componentsString) {
-            componentsInt.add(Integer.parseInt(component));
+        for (String part : parts) {
+            componentsInt.add(Integer.parseInt(part));
         }
         setFirst(componentsInt.get(0));
         setSecond(componentsInt.get(1));
@@ -27,29 +28,18 @@ public class IPAddress extends NetworkAddress{
         setFourth(componentsInt.get(3));
     }
 
-    public boolean iP(String ip) {
-        List<String> sequentList = Arrays.asList(ip.split("\\."));
-        for (int i = 0; i < 4; i++) {
-            if (sequentList.get(i).isEmpty()) {
-                System.out.println("Zuwenig Sequenz Inhalt!");
-                return false;
-            }
-            if (sequentList.get(0).equals("0")) {
-                System.out.println("Erste Sequenz darf nicht 0 sein!");
-                return false;
-            }
-            if (!StringUtils.isNumeric(sequentList.get(i))) {
-                System.out.println("Ungültige Eingabe! Gib bitte eine gültige IP ein!");
-                return false;
-            } else {
-                int sequence = Integer.parseInt(sequentList.get(i));
-                if (sequence > 255) {
-                    System.out.println("Zahl zu groß!");
-                    return false;
-                }
-            }
-        }
-        return true;
+    public IPAddress() {}
+
+    public IPAddress(int first, int second, int third, int fourth) {
+        this.setFirst(first);
+        this.setSecond(second);
+        this.setThird(third);
+        this.setFourth(fourth);
+    }
+
+    public boolean checkDots(String value) {
+        int count = StringUtils.countMatches(value, ".");
+        return count == 3;
     }
 
     @Override
@@ -117,5 +107,18 @@ public class IPAddress extends NetworkAddress{
         if (value < 1 || value > 255) {
             throw new IllegalArgumentException(component + " out of Range");
         }
+    }
+    public IPAddress logicalAnd(IPAddress another) {
+        Objects.requireNonNull(another);
+        int first = this.getFirst() & another.getFirst();
+        int second = this.getSecond() & another.getSecond();
+        int third = this.getThird() & another.getThird();
+        int fourth = this.getFourth() & another.getFourth();
+        IPAddress result = new IPAddress();
+        result.setFirst(first);
+        result.setSecond(second);
+        result.setThird(third);
+        result.setFourth(fourth);
+        return result;
     }
 }

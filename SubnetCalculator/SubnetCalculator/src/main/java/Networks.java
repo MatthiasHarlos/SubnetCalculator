@@ -109,13 +109,12 @@ public class Networks {
 
     private void calculateIDs(IPAddress iD, Subnetmask snm) {
         List<String> iDsList = new ArrayList<>();
-        iDsList.add(iD.toString());
         String snmBinary = snm.toBinaryString();
         if (snmBinary.lastIndexOf("1") >= 24) {
             snmBinary = snmBinary.substring(24);
             String iDsFromSNM = calcSize(snmBinary);
             int iDsSize = 256/Integer.parseInt(iDsFromSNM);
-            for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
+            for (int i = 0; i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
                 IPAddress[] iDs = new IPAddress[iDsSize];
                 iDs[counter] = new IPAddress();
@@ -130,7 +129,7 @@ public class Networks {
             snmBinary = snmBinary.substring(16,24);
             String iDsFromSNM = calcSize(snmBinary);
             int iDsSize = 256/Integer.parseInt(iDsFromSNM);
-            for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
+            for (int i = 0; i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
                 IPAddress[] iDs = new IPAddress[iDsSize];
                 iDs[counter] = new IPAddress();
@@ -145,7 +144,7 @@ public class Networks {
             snmBinary = snmBinary.substring(8,16);
             String iDsFromSNM = calcSize(snmBinary);
             int iDsSize = 256/Integer.parseInt(iDsFromSNM);
-            for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
+            for (int i = 0; i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
                 IPAddress[] iDs = new IPAddress[iDsSize];
                 iDs[counter] = new IPAddress();

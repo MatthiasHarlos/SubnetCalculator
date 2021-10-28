@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Network {
+public class Networks {
     private List<String> iDs = new ArrayList<>();
     private List<String> bcs = new ArrayList<>();
     private List<List<String>> ips = new ArrayList<>();
     private List<List<String>> networks = new ArrayList<>();
     private int host;
 
-    public Network(IPAddress iD, Subnetmask snm, int hosts) {
+    public Networks(IPAddress iD, Subnetmask snm, int hosts) {
         calculateIDs(iD, snm);
         calculateBCs(iD, snm);
         calculateIPs(snm);

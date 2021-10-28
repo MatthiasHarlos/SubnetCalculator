@@ -13,16 +13,16 @@ public class SubnetCalculator{
         IPAddress netID = calculateNetID(ip, snm);
         IPAddress broadcast = calculateBroadcastIp(netID, snm);
         int hosts = snm.getHosts();
-        Network network = new Network(netID, snm, hosts);
-        resultOutputForUser(netID, broadcast, hosts, network, snm);
+        Networks networks = new Networks(netID, snm, hosts);
+        resultOutputForUser(netID, broadcast, hosts, networks, snm);
     }
 
-    private static void resultOutputForUser(IPAddress netID, IPAddress broadcast, int hosts, Network network, Subnetmask snm) {
+    private static void resultOutputForUser(IPAddress netID, IPAddress broadcast, int hosts, Networks networks, Subnetmask snm) {
         System.out.println("Netz ID= " + netID);
         System.out.println("Broadcast= " + broadcast);
         System.out.println("Mögliche Hosts= " + hosts + "\n");
         System.out.println("Alle möglichen Netze mit der Subnetzmaske " + snm);
-        for (List<String> allNetworks : network.getNetworks()) {
+        for (List<String> allNetworks : networks.getNetworks()) {
             System.out.println(allNetworks);
         }
     }

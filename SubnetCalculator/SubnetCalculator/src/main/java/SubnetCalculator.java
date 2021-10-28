@@ -13,7 +13,7 @@ public class SubnetCalculator{
         IPAddress netID = calculateNetID(ip, snm);
         IPAddress broadcast = calculateBroadcastIp(netID, snm);
         int hosts = snm.getHosts();
-        Networks networks = new Networks(netID, snm, hosts);
+        Networks networks = new Networks(netID, snm, broadcast, hosts);
         resultOutputForUser(netID, broadcast, hosts, networks, snm);
     }
 

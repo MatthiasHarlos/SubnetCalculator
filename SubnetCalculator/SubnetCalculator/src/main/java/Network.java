@@ -9,11 +9,25 @@ public class Network {
     private int host;
 
     public Network(IPAddress iD, Subnetmask snm, int hosts) {
-        calculateIDs(iD,  snm);
+        calculateIDs(iD, snm);
         calculateBCs(iD, snm);
         calculateIPs(snm);
         setHost(hosts);
         calculateAllNets();
+    }
+
+    public void calculateAllNets() {
+        List<List<String>> resultLists = new ArrayList<>();
+        for (int i = 0; i < iDs.size(); i++) {
+            List<String> result = new ArrayList<>();
+            result.add("ID= " + iDs.get(i));
+            result.add("Braodcast= " + bcs.get(i));
+            result.add(ips.get(i).get(0));
+            result.add(ips.get(i).get(1));
+            result.add("Mögliche Hosts= " + getHost());
+            resultLists.add(result);
+        }
+        setNetworks(resultLists);
     }
 
     private void calculateIPs(Subnetmask snm) {
@@ -39,20 +53,6 @@ public class Network {
         }
     }
 
-      public void calculateAllNets() {
-        List<List<String>> resultLists = new ArrayList<>();
-        for (int i = 0; i < iDs.size(); i++) {
-            List<String> result = new ArrayList<>();
-            result.add("ID= " + iDs.get(i));
-            result.add("Braodcast= " + bcs.get(i));
-            result.add(ips.get(i).get(0));
-            result.add(ips.get(i).get(1));
-            result.add("Mögliche Hosts= " + getHost());
-            resultLists.add(result);
-        }
-        setNetworks(resultLists);
-    }
-
     private void calculateBCs(IPAddress iD, Subnetmask snm) {
         List<String> bcsList = new ArrayList<>();
         String snmBinary = snm.toBinaryString();
@@ -60,10 +60,10 @@ public class Network {
         if (snmBinary.lastIndexOf("1") >= 24) {
             snmBinary = snmBinary.substring(24);
             String iDsFromSNM = calcSize(snmBinary);
-            int test = 256 / Integer.parseInt(iDsFromSNM);
+            int bcsSize = 256 / Integer.parseInt(iDsFromSNM);
             for (int i = Integer.parseInt(iDsFromSNM); i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
-                Subnetmask[] bcs = new Subnetmask[test];
+                Subnetmask[] bcs = new Subnetmask[bcsSize];
                 bcs[counter] = new Subnetmask();
                 bcs[counter].setFirst(iD.getFirst());
                 bcs[counter].setSecond(iD.getSecond());
@@ -72,14 +72,13 @@ public class Network {
                 bcsList.add(bcs[counter].toString());
                 counter++;
             }
-            setBcs(bcsList);
         } else if (snmBinary.lastIndexOf("1") >= 16) {
             snmBinary = snmBinary.substring(16, 24);
             String iDsFromSNM = calcSize(snmBinary);
-            int test = 256 / Integer.parseInt(iDsFromSNM);
+            int bcsSize = 256 / Integer.parseInt(iDsFromSNM);
             for (int i = Integer.parseInt(iDsFromSNM); i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
-                Subnetmask[] bcs = new Subnetmask[test];
+                Subnetmask[] bcs = new Subnetmask[bcsSize];
                 bcs[counter] = new Subnetmask();
                 bcs[counter].setFirst(iD.getFirst());
                 bcs[counter].setSecond(iD.getSecond());
@@ -88,14 +87,13 @@ public class Network {
                 bcsList.add(bcs[counter].toString());
                 counter++;
             }
-            setBcs(bcsList);
         } else if (snmBinary.lastIndexOf("1") >= 8) {
             snmBinary = snmBinary.substring(8, 16);
             String iDsFromSNM = calcSize(snmBinary);
-            int test = 256 / Integer.parseInt(iDsFromSNM);
+            int bcsSize = 256 / Integer.parseInt(iDsFromSNM);
             for (int i = Integer.parseInt(iDsFromSNM); i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
-                Subnetmask[] bcs = new Subnetmask[test];
+                Subnetmask[] bcs = new Subnetmask[bcsSize];
                 bcs[counter] = new Subnetmask();
                 bcs[counter].setFirst(iD.getFirst());
                 bcs[counter].setSecond(i - 1);
@@ -104,8 +102,8 @@ public class Network {
                 bcsList.add(bcs[counter].toString());
                 counter++;
             }
-            setBcs(bcsList);
         }
+        setBcs(bcsList);
     }
 
     private void calculateIDs(IPAddress iD, Subnetmask snm) {
@@ -115,10 +113,10 @@ public class Network {
         if (snmBinary.lastIndexOf("1") >= 24) {
             snmBinary = snmBinary.substring(24);
             String iDsFromSNM = calcSize(snmBinary);
-            int test = 256/Integer.parseInt(iDsFromSNM);
+            int iDsSize = 256/Integer.parseInt(iDsFromSNM);
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
-                IPAddress[] iDs = new IPAddress[test];
+                IPAddress[] iDs = new IPAddress[iDsSize];
                 iDs[counter] = new IPAddress();
                 iDs[counter].setFirst(iD.getFirst());
                 iDs[counter].setSecond(iD.getSecond());
@@ -127,14 +125,13 @@ public class Network {
                 iDsList.add(iDs[counter].toString());
                 counter++;
             }
-            setiDs(iDsList);
         } else if (snmBinary.lastIndexOf("1") >= 16) {
             snmBinary = snmBinary.substring(16,24);
             String iDsFromSNM = calcSize(snmBinary);
-            int test = 256/Integer.parseInt(iDsFromSNM);
+            int iDsSize = 256/Integer.parseInt(iDsFromSNM);
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
-                IPAddress[] iDs = new IPAddress[test];
+                IPAddress[] iDs = new IPAddress[iDsSize];
                 iDs[counter] = new IPAddress();
                 iDs[counter].setFirst(iD.getFirst());
                 iDs[counter].setSecond(iD.getSecond());
@@ -143,14 +140,13 @@ public class Network {
                 iDsList.add(iDs[counter].toString());
                 counter++;
             }
-            setiDs(iDsList);
         } else if (snmBinary.lastIndexOf("1") >= 8) {
             snmBinary = snmBinary.substring(8,16);
             String iDsFromSNM = calcSize(snmBinary);
-            int test = 256/Integer.parseInt(iDsFromSNM);
+            int iDsSize = 256/Integer.parseInt(iDsFromSNM);
             for (int i = Integer.parseInt(iDsFromSNM); i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
-                IPAddress[] iDs = new IPAddress[test];
+                IPAddress[] iDs = new IPAddress[iDsSize];
                 iDs[counter] = new IPAddress();
                 iDs[counter].setFirst(iD.getFirst());
                 iDs[counter].setSecond(i);
@@ -159,17 +155,17 @@ public class Network {
                 iDsList.add(iDs[counter].toString());
                 counter++;
             }
-            setiDs(iDsList);
         }
+        setiDs(iDsList);
     }
 
-    public String calcSize(String  snmBinary) {
+    private String calcSize(String  snmBinary) {
         snmBinary = snmBinary.substring(snmBinary.lastIndexOf("1"));
         snmBinary = "0".repeat(Math.max(0, 8 - snmBinary.length())) + snmBinary;
         return Integer.parseInt(snmBinary, 2) + "";
     }
 
-    public int getHost() {
+    private int getHost() {
         return host;
     }
 
@@ -177,23 +173,23 @@ public class Network {
         return networks;
     }
 
-    public void setNetworks(List<List<String>> networks) {
+    private void setNetworks(List<List<String>> networks) {
         this.networks = networks;
     }
 
-    public void setBcs(List<String> bcs) {
+    private void setBcs(List<String> bcs) {
         this.bcs = bcs;
     }
 
-    public void setiDs(List<String> iDs) {
+    private void setiDs(List<String> iDs) {
         this.iDs = iDs;
     }
 
-    public void setIps(List<List<String>> ips) {
+    private void setIps(List<List<String>> ips) {
         this.ips = ips;
     }
 
-    public void setHost(int host) {
+    private void setHost(int host) {
         this.host = host;
     }
 }

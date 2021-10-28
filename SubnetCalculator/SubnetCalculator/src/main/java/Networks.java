@@ -63,7 +63,7 @@ public class Networks {
             snmBinary = snmBinary.substring(24);
             String iDsFromSNM = calcSize(snmBinary);
             int bcsSize = 256 / Integer.parseInt(iDsFromSNM);
-            for (int i = Integer.parseInt(iDsFromSNM); i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
+            for (int i = Integer.parseInt(iDsFromSNM)*2; i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
                 Subnetmask[] bcs = new Subnetmask[bcsSize];
                 bcs[counter] = new Subnetmask();
@@ -78,7 +78,7 @@ public class Networks {
             snmBinary = snmBinary.substring(16, 24);
             String iDsFromSNM = calcSize(snmBinary);
             int bcsSize = 256 / Integer.parseInt(iDsFromSNM);
-            for (int i = Integer.parseInt(iDsFromSNM); i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
+            for (int i = Integer.parseInt(iDsFromSNM)*2; i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
                 Subnetmask[] bcs = new Subnetmask[bcsSize];
                 bcs[counter] = new Subnetmask();
@@ -93,7 +93,7 @@ public class Networks {
             snmBinary = snmBinary.substring(8, 16);
             String iDsFromSNM = calcSize(snmBinary);
             int bcsSize = 256 / Integer.parseInt(iDsFromSNM);
-            for (int i = Integer.parseInt(iDsFromSNM); i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
+            for (int i = Integer.parseInt(iDsFromSNM)*2; i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
                 Subnetmask[] bcs = new Subnetmask[bcsSize];
                 bcs[counter] = new Subnetmask();

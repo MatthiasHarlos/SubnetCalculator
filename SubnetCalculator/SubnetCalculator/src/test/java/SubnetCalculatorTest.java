@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SubnetCalculatorTest {
-
+/*
     Validator validate = new Validator();
     Calculator calculate = new Calculator();
 
@@ -148,5 +148,5 @@ public class SubnetCalculatorTest {
         Assertions.assertFalse(validate.snmValidation(testList));
         testList = List.of(255, 0, 0, 0);
         Assertions.assertTrue(validate.snmValidation(testList));
-    }
+    } */
 }

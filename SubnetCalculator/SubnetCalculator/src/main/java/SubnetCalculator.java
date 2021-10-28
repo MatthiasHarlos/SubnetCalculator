@@ -21,7 +21,9 @@ public class SubnetCalculator{
         System.out.println("Netz ID= " + netID);
         System.out.println("Broadcast= " + broadcast);
         System.out.println("Mögliche Hosts= " + hosts + "\n");
-        System.out.println("Alle möglichen Netze mit der Subnetzmaske " + snm  + " sind:\n");
+        if (networks.getNetworks().size() > 1) {
+            System.out.println("Alle möglichen Netze mit der Subnetzmaske " + snm + " sind:\n");
+        }
         for (List<String> allNetworks : networks.getNetworks()) {
             System.out.println(allNetworks);
         }

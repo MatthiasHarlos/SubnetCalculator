@@ -19,8 +19,12 @@ public class IPAddress{
         }
 
         List<Integer> componentsInt = new ArrayList<>();
+
         for (String part : parts) {
             componentsInt.add(Integer.parseInt(part));
+        }
+        if (componentsInt.get(0) <1) {
+            throw new IllegalArgumentException("IP darf nicht mit 0 beginnen!");
         }
         setFirst(componentsInt.get(0));
         setSecond(componentsInt.get(1));
@@ -58,12 +62,12 @@ public class IPAddress{
     }
 
     private String componentToBinaryString(int component) {
-        String result = Integer.toBinaryString(component);
+        StringBuilder result = new StringBuilder(Integer.toBinaryString(component));
 
         while (result.length() <= 7) {
-            result = "0" + result;
+            result.insert(0, "0");
         }
-        return result;
+        return result.toString();
     }
 
 
@@ -104,7 +108,7 @@ public class IPAddress{
     }
 
     public void validateComponentRange(int value, String component) {
-        if (value < 1 || value > 255) {
+        if (value < 0 || value > 255) {
             throw new IllegalArgumentException(component + " out of Range");
         }
     }

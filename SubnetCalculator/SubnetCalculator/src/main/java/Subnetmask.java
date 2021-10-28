@@ -4,6 +4,7 @@ public class Subnetmask extends IPAddress {
 
     private int hosts;
 
+    public Subnetmask(){}
     public Subnetmask(String input) {
         super(input);
         if (this.getFirst() != 255) {

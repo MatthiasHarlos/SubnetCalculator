@@ -6,24 +6,25 @@ public class SubnetCalculator{
         System.out.println("Willkommen beim Netzwerkrechner!");
         IPAddress ip = checkUserIPInput();
         Subnetmask snm = checkUserSNMInput();
-
-        System.out.println("Eingegebene IP: " + ip.toString());
-        System.out.println("Eingegebene SNM: " + snm.toString());
-        System.out.println("");
+        System.out.println("Eingegebene IP: " + ip);
+        System.out.println("Eingegebene SNM: " + snm + "\n");
         System.out.println("IP (bin) : " + ip.toBinaryString());
-        System.out.println("SNM (bin): " + snm.toBinaryString());
-        System.out.println("");
+        System.out.println("SNM (bin): " + snm.toBinaryString() + "\n");
         IPAddress netID = calculateNetID(ip, snm);
         IPAddress broadcast = calculateBroadcastIp(netID, snm);
         int hosts = snm.getHosts();
-        //Network network = new Network(netID, snm);
-        resultOutputForUser(netID, broadcast, hosts);
+        Network network = new Network(netID, snm, hosts);
+        resultOutputForUser(netID, broadcast, hosts, network, snm);
     }
 
-    private static void resultOutputForUser(IPAddress netID, IPAddress broadcast, int hosts) {
+    private static void resultOutputForUser(IPAddress netID, IPAddress broadcast, int hosts, Network network, Subnetmask snm) {
         System.out.println("Netz ID= " + netID);
         System.out.println("Broadcast= " + broadcast);
-        System.out.println("Mögliche Hosts= " + hosts);
+        System.out.println("Mögliche Hosts= " + hosts + "\n");
+        System.out.println("Alle möglichen Netze mit der Subnetzmaske " + snm);
+        for (List<String> allNetworks : network.getNetworks()) {
+            System.out.println(allNetworks);
+        }
     }
 
     public static IPAddress calculateBroadcastIp(IPAddress netId, Subnetmask subnetmask) {
@@ -66,22 +67,4 @@ public class SubnetCalculator{
             return checkUserSNMInput();
         }
     }
-
-  /*  public static void resultOutputForUser(String iDs, String bCs, List<List<String>> iPs, int hosts) {
-        List<String> iDList = Arrays.asList(iDs.split("\\|"));
-        List<String> bcList = Arrays.asList(bCs.split("\\|"));
-        List<List<String>> resultLists = new ArrayList<>();
-        for (int i = 0; i < iDList.size(); i++) {
-            List<String> result = new ArrayList<>();
-            result.add(iDList.get(i));
-            result.add(bcList.get(i));
-            result.add(iPs.get(i).get(0));
-            result.add(iPs.get(i).get(1));
-            result.add("Mögliche Hosts= " + hosts);
-            resultLists.add(result);
-        }
-        for (List<String> resultList : resultLists) {
-            System.out.println(resultList);
-        }
-    }*/
 }

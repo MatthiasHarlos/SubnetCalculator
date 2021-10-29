@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Networks {
-    private List<IPAddress> iDs = new ArrayList<>();
-    private List<IPAddress> bcs = new ArrayList<>();
-    private List<List<String>> ips = new ArrayList<>();
+    private final List<IPAddress> iDs = new ArrayList<>();
+    private final List<IPAddress> bcs = new ArrayList<>();
+    private final List<List<IPAddress>> ips = new ArrayList<>();
     private List<List<String>> networks = new ArrayList<>();
     private int host;
 
@@ -26,8 +26,8 @@ public class Networks {
             List<String> result = new ArrayList<>();
             result.add("Netz ID= " + iDs.get(i));
             result.add("Braodcast= " + bcs.get(i));
-            result.add(ips.get(i).get(0));
-            result.add(ips.get(i).get(1));
+            result.add("Erste IP= " + ips.get(i).get(0));
+            result.add("Letzte IP= " + ips.get(i).get(1));
             result.add("Mögliche Hosts= " + getHost());
             resultLists.add(result);
         }
@@ -35,25 +35,18 @@ public class Networks {
     }
 
     private void setPossibleIPs(Subnetmask snm) {
-        List<List<String>> resultList = new ArrayList<>();
         String snmBinary = snm.toBinaryString();
         for (int i = 0; i < iDs.size(); i++) {
-            String[] iPs = new String[iDs.size()];
-            String[] iPslast = new String[iDs.size()];
-            List<String> result = new ArrayList<>();
+            List<IPAddress> result = new ArrayList<>();
             if ( snmBinary.lastIndexOf("1") >= 24) {
                 int firstIPs = Integer.parseInt(iDs.get(i).toString().substring(iDs.get(i).toString().lastIndexOf(".")+1))+1;
-                iPs[i] = "Erste IP = " + iDs.get(i).toString().substring(0, iDs.get(i).toString().lastIndexOf(".")+1)+firstIPs;
-                result.add(iPs[i]);
+                result.add(new IPAddress(iDs.get(i).toString().substring(0, iDs.get(i).toString().lastIndexOf(".")+1)+firstIPs));
             } else if ( snmBinary.lastIndexOf("1") < 24) {
-                iPs[i] = "Erste IP = " + iDs.get(i).toString().substring(0, iDs.get(i).toString().lastIndexOf(".")+1)+"1";
-                result.add(iPs[i]);
+                result.add(new IPAddress(iDs.get(i).toString().substring(0, iDs.get(i).toString().lastIndexOf(".")+1)+"1"));
             }
             int lastIPs = Integer.parseInt(bcs.get(i).toString().substring(bcs.get(i).toString().lastIndexOf(".") + 1)) - 1;
-            iPslast[i] = "Letzte IP = " + bcs.get(i).toString().substring(0, bcs.get(i).toString().lastIndexOf(".") + 1) + lastIPs;
-            result.add(iPslast[i]);
-            resultList.add(result);
-            this.ips = resultList;
+            result.add(new IPAddress(bcs.get(i).toString().substring(0, bcs.get(i).toString().lastIndexOf(".") + 1) + lastIPs));
+            this.ips.add(result);
         }
     }
 

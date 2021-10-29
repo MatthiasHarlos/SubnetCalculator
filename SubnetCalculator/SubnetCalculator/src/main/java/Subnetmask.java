@@ -25,6 +25,13 @@ public class Subnetmask extends IPAddress {
         return hosts;
     }
 
+    public Subnetmask(int first, int second, int third, int fourth) {
+        this.setFirst(first);
+        this.setSecond(second);
+        this.setThird(third);
+        this.setFourth(fourth);
+    }
+
     public IPAddress invert() {
         int first = ~this.getFirst() & 255; // cut off leading zeros
         int second = ~this.getSecond() & 255; // cut off leading zeros

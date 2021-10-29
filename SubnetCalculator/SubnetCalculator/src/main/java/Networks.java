@@ -65,11 +65,7 @@ public class Networks {
             for (int i = Integer.parseInt(iDsFromSNM)*2; i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
                 Subnetmask[] bcs = new Subnetmask[bcsSize];
-                bcs[counter] = new Subnetmask();
-                bcs[counter].setFirst(iD.getFirst());
-                bcs[counter].setSecond(iD.getSecond());
-                bcs[counter].setThird(iD.getThird());
-                bcs[counter].setFourth(i - 1);
+                bcs[counter] = new Subnetmask(iD.getFirst(), iD.getSecond(), iD.getThird(), i - 1);
                 bcsList.add(bcs[counter].toString());
                 counter++;
             }
@@ -80,11 +76,7 @@ public class Networks {
             for (int i = Integer.parseInt(iDsFromSNM)*2; i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
                 Subnetmask[] bcs = new Subnetmask[bcsSize];
-                bcs[counter] = new Subnetmask();
-                bcs[counter].setFirst(iD.getFirst());
-                bcs[counter].setSecond(iD.getSecond());
-                bcs[counter].setThird(i - 1);
-                bcs[counter].setFourth(invertedSnm.getFourth());
+                bcs[counter] = new Subnetmask(iD.getFirst(), iD.getSecond(), i-1 , invertedSnm.getFourth());
                 bcsList.add(bcs[counter].toString());
                 counter++;
             }
@@ -95,11 +87,7 @@ public class Networks {
             for (int i = Integer.parseInt(iDsFromSNM)*2; i <= 256; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
                 Subnetmask[] bcs = new Subnetmask[bcsSize];
-                bcs[counter] = new Subnetmask();
-                bcs[counter].setFirst(iD.getFirst());
-                bcs[counter].setSecond(i - 1);
-                bcs[counter].setThird(invertedSnm.getThird());
-                bcs[counter].setFourth(invertedSnm.getFourth());
+                bcs[counter] = new Subnetmask(iD.getFirst(), i-1, invertedSnm.getThird() , invertedSnm.getFourth());
                 bcsList.add(bcs[counter].toString());
                 counter++;
             }
@@ -117,11 +105,7 @@ public class Networks {
             for (int i = 0; i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
                 IPAddress[] iDs = new IPAddress[iDsSize];
-                iDs[counter] = new IPAddress();
-                iDs[counter].setFirst(iD.getFirst());
-                iDs[counter].setSecond(iD.getSecond());
-                iDs[counter].setThird(iD.getThird());
-                iDs[counter].setFourth(i);
+                iDs[counter] = new IPAddress(iD.getFirst(), iD.getSecond() , iD.getThird(), i);
                 iDsList.add(iDs[counter].toString());
                 counter++;
             }
@@ -132,11 +116,7 @@ public class Networks {
             for (int i = 0; i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
                 IPAddress[] iDs = new IPAddress[iDsSize];
-                iDs[counter] = new IPAddress();
-                iDs[counter].setFirst(iD.getFirst());
-                iDs[counter].setSecond(iD.getSecond());
-                iDs[counter].setThird(i);
-                iDs[counter].setFourth(iD.getFourth());
+                iDs[counter] = new IPAddress(iD.getFirst(), iD.getSecond() , i, iD.getFourth());
                 iDsList.add(iDs[counter].toString());
                 counter++;
             }
@@ -147,11 +127,7 @@ public class Networks {
             for (int i = 0; i<255; i = i + Integer.parseInt(iDsFromSNM)) {
                 int counter = 0;
                 IPAddress[] iDs = new IPAddress[iDsSize];
-                iDs[counter] = new IPAddress();
-                iDs[counter].setFirst(iD.getFirst());
-                iDs[counter].setSecond(i);
-                iDs[counter].setThird(iD.getThird());
-                iDs[counter].setFourth(iD.getFourth());
+                iDs[counter] = new IPAddress(iD.getFirst(), i , iD.getThird(), iD.getFourth());
                 iDsList.add(iDs[counter].toString());
                 counter++;
             }

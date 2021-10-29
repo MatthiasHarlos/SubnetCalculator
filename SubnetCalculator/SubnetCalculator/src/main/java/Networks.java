@@ -20,6 +20,22 @@ public class Networks {
         return networks;
     }
 
+    public void setSimpleFirstAndLastIP(IPAddress iD, IPAddress bc) {
+        List<IPAddress> result = new ArrayList<>();
+        int firstIPs = Integer.parseInt(iD.toString().substring(iD.toString().lastIndexOf(".")+1))+1;
+        result.add(new IPAddress(iD.toString().substring(0, iD.toString().lastIndexOf(".")+1)+firstIPs));
+        int lastIPs = Integer.parseInt(bc.toString().substring(bc.toString().lastIndexOf(".") + 1)) - 1;
+        result.add(new IPAddress(bc.toString().substring(0, bc.toString().lastIndexOf(".") + 1) + lastIPs));
+        this.ips.add(result);
+    }
+
+    public List<String> getSimpleFirstAndLastIP() {
+        List<String> result = new ArrayList<>();
+        result.add("Erste IP = " + ips.get(0).get(0).toString());
+        result.add("Letzte IP = " + ips.get(0).get(1).toString());
+        return result;
+    }
+
     private void calculateAllNets() {
         List<List<String>> resultLists = new ArrayList<>();
         for (int i = 0; i < iDs.size(); i++) {

@@ -20,6 +20,8 @@ public class SubnetCalculator{
     private static void resultOutputForUser(IPAddress netID, IPAddress broadcast, int hosts, Networks networks, Subnetmask snm) {
         System.out.println("Netz ID= " + netID);
         System.out.println("Broadcast= " + broadcast);
+        networks.setSimpleFirstAndLastIP(netID, broadcast);
+        System.out.println(networks.getSimpleFirstAndLastIP());
         System.out.println("Mögliche Hosts= " + hosts + "\n");
         if (networks.getNetworks().size() > 1) {
             System.out.println("Alle möglichen Netze mit der Subnetzmaske " + snm + " sind:\n");

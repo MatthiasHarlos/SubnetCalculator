@@ -26,7 +26,6 @@ public class Networks {
     public void setSimpleFirstAndLastIP(IPAddress iD, IPAddress bc) {
         List<IPAddress> result = new ArrayList<>();
         int firstIPs = Integer.parseInt(iD.toString().substring(iD.toString().lastIndexOf(".") + 1)) + 1;
-        System.out.println(firstIPs);
         result.add(new IPAddress(iD.toString().substring(0, iD.toString().lastIndexOf(".") +1) + firstIPs));
         int lastIPs = Integer.parseInt(bc.toString().substring(bc.toString().lastIndexOf(".") + 1)) - 1;
         result.add(new IPAddress(bc.toString().substring(0, bc.toString().lastIndexOf(".") + 1) + lastIPs));
